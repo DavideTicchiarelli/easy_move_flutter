@@ -11,7 +11,6 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: const Color(0xFF00BFFF),
         shape: const RoundedRectangleBorder(
@@ -29,35 +28,36 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
             fontWeight: FontWeight.bold, // Imposta il testo in grassetto
           ),
         ),
-        automaticallyImplyLeading: false, // Questo rimuove l'icona della freccia
+        automaticallyImplyLeading:
+            false, // Questo rimuove l'icona della freccia
       ),
-
       body: Column(
         children: [
           // Card per le statistiche
           Card(
-            margin: const EdgeInsets.all(20), // Margine intorno alla seconda card
+            margin:
+                const EdgeInsets.all(20), // Margine intorno alla seconda card
             elevation: 5,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Padding(
-              padding: EdgeInsets.all(20),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Statistiche',
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  StatisticRow('Richieste totali:', '100'),
-                  StatisticRow('Richieste in attesa:', '25'),
-                  StatisticRow('Richieste accettate:', '75'),
-                  StatisticRow('Richieste completate:', '50'),
+                  const SizedBox(height: 10),
+                  createTextWidget('Richieste totali:', '100'),
+                  createTextWidget('Richieste in attesa:', '25'),
+                  createTextWidget('Richieste accettate:', '75'),
+                  createTextWidget('Richieste completate:', '50'),
                 ],
               ),
             ),
@@ -69,7 +69,8 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
             child: Column(
               children: [
                 TabBar(
-                  labelColor: Colors.black, // Imposta il colore del testo delle schede attive
+                  labelColor: Colors
+                      .black, // Imposta il colore del testo delle schede attive
                   tabs: [
                     Tab(text: 'Tab 1'),
                     Tab(text: 'Tab 2'),
@@ -101,37 +102,27 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
   }
 }
 
-
-
-class StatisticRow extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const StatisticRow(this.label, this.value, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 18,
-              color: Color(0xFF00BFFF),
-            ),
+Widget createTextWidget(String label, String value) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 5),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 18,
+            color: Color(0xFF00BFFF),
           ),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+        ),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
 }

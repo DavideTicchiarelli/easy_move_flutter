@@ -4,10 +4,7 @@ import 'Login.dart';
 import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-
-
 final UserViewModel userViewModel = UserViewModel();
-
 
 void main() {
   runApp(const MaterialApp(
@@ -23,7 +20,6 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-
   bool isChecked = false;
   String userType = "consumatore";
 
@@ -46,7 +42,8 @@ class _SignupState extends State<Signup> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 44.0, left:15.0), // Add margin top here
+                    margin: const EdgeInsets.only(
+                        top: 44.0, left: 15.0),
                     child: FloatingActionButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -76,8 +73,6 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                   const SizedBox(height: 16.0),
-
-                  const SizedBox(height: 16.0),
                   Material(
                     elevation: 4.0,
                     shape: const RoundedRectangleBorder(
@@ -90,128 +85,56 @@ class _SignupState extends State<Signup> {
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0), // Imposta i margini desiderati
-                            height: 50.0, // Imposta l'altezza desiderata
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0), // Imposta il radius a 15dp
-                              color: const Color(0x1A00bfff), // Colore di sfondo
-                            ),
-                            child: TextFormField(
-                              controller: nomeController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none, // Rimuovi il bordo predefinito
-                                labelText: "Nome",
-                                prefixIcon: Icon(
-                                  Icons.person,
-                                  color: Color(0xFF00BFFF), // Colore blu come il colore dello sfondo
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(height: 15.0),
-                          Container(
-                            height: 50.0, // Imposta l'altezza
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0), // Imposta i margini
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0), // Imposta il radius a 15dp
-                              color: const Color(0x1A00bfff), // Colore di sfondo
-                            ),
-                            child: TextFormField(
-                              controller: cognomeController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none, // Rimuovi il bordo predefinito
-                                labelText: "Cognome",
-                                prefixIcon: Icon(
-                                  Icons.person,
-                                  color: Color(0xFF00BFFF),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(height: 15.0),
-                          Container(
-                            height: 50.0, // Imposta l'altezza
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0), // Imposta i margini
-
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0), // Imposta il radius a 15dp
-                              color: const Color(0x1A00bfff), // Colore di sfondo
-                            ),
-                            child: TextFormField(
-                              controller: emailController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none, // Rimuovi il bordo predefinito
-                                labelText: "Email",
-                                prefixIcon: Icon(
-                                  Icons.mail,
-                                  color: Color(0xFF00BFFF), // Colore blu come il colore dello sfondo
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(height: 15.0),
-                          Container(
-                            height: 50.0,
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0), // Imposta i margini
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: const Color(0x1A00bfff), // Imposta il colore personalizzato
-                            ),
-                            child: TextFormField(
-                              controller: passwordController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "Password",
-                                prefixIcon: Icon(
-                                  Icons.lock,
-                                  color: Color(0xFF00BFFF), // Colore blu come il colore dello sfondo
-                                ),
-                              ),
-                              obscureText: true, // Imposta il testo come nascosto per una password
-                            ),
+                          createTextField(
+                            controller: nomeController,
+                            labelText: "Nome",
+                            prefixIcon: Icons.person,
+                            obscureText: false,
                           ),
                           const SizedBox(height: 15.0),
-                          Container(
-                            height: 50.0,
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0), // Imposta i margini
-
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: const Color(0x1A00bfff), // Imposta il colore personalizzato
-                            ),
-                            child: TextFormField(
-                              controller: ripetiPasswordController,
-
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "Ripeti Password",
-                                prefixIcon: Icon(
-                                  Icons.lock,
-                                  color: Color(0xFF00BFFF), // Colore blu come il colore dello sfondo
-                                ),
-                              ),
-                              obscureText: true, // Imposta il testo come nascosto per una password
-                            ),
+                          createTextField(
+                            controller: cognomeController,
+                            labelText: "Cognome",
+                            prefixIcon: Icons.person,
+                            obscureText: false,
+                          ),
+                          const SizedBox(height: 15.0),
+                          createTextField(
+                            controller: emailController,
+                            labelText: "Password",
+                            prefixIcon: Icons.mail,
+                            obscureText: false,
+                          ),
+                          const SizedBox(height: 15.0),
+                          createTextField(
+                            controller: passwordController,
+                            labelText: "Password",
+                            prefixIcon: Icons.lock,
+                            obscureText: true,
+                          ),
+                          const SizedBox(height: 15.0),
+                          createTextField(
+                            controller: ripetiPasswordController,
+                            labelText: "RipetiPassword",
+                            prefixIcon: Icons.lock,
+                            obscureText: true,
                           ),
                           const SizedBox(height: 15.0),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 15.0),
                             child: Row(
                               children: [
                                 Checkbox(
                                   value: isChecked,
-                                  activeColor: const Color(0xFF00BFFF), // Imposta il colore attivo
+                                  activeColor: const Color(
+                                      0xFF00BFFF), // Imposta il colore attivo
 
                                   onChanged: (newBool) {
                                     setState(() {
-                                      isChecked= newBool!;
+                                      isChecked = newBool!;
                                     });
                                   },
-
                                 ),
                                 const Text(
                                   "Sono un guidatore",
@@ -220,50 +143,66 @@ class _SignupState extends State<Signup> {
                               ],
                             ),
                           ),
-
                           const SizedBox(height: 15.0),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
                               onPressed: () async {
                                 final name = nomeController.text;
                                 final surname = cognomeController.text;
                                 final email = emailController.text;
                                 final password = passwordController.text;
-                                final ripetiPassword = ripetiPasswordController.text;
+                                final ripetiPassword =
+                                    ripetiPasswordController.text;
 
-                                if(isChecked) {
-                                  userType="guidatore";
-                                } else{
-                                  userType="consumatore";
+                                if (isChecked) {
+                                  userType = "guidatore";
+                                } else {
+                                  userType = "consumatore";
                                 }
-                                final result = await userViewModel.signUp(name, surname, email, password, ripetiPassword, userType);
+                                final result = await userViewModel.signUp(
+                                    name,
+                                    surname,
+                                    email,
+                                    password,
+                                    ripetiPassword,
+                                    userType);
 
                                 Fluttertoast.showToast(
                                   msg: "$result", // Messaggio del toast
-                                  toastLength: Toast.LENGTH_SHORT, // Durata del toast (SHORT o LONG)
-                                  gravity: ToastGravity.BOTTOM, // Posizione del toast (TOP, BOTTOM, CENTER)
-                                  timeInSecForIosWeb: 1, // Durata del toast per iOS e Web (in secondi)
-                                  backgroundColor: Colors.grey, // Colore di sfondo del toast
-                                  textColor: Colors.white, // Colore del testo del toast
-                                  fontSize: 15.0, // Dimensione del testo del toast
+                                  toastLength: Toast
+                                      .LENGTH_SHORT, // Durata del toast (SHORT o LONG)
+                                  gravity: ToastGravity
+                                      .BOTTOM, // Posizione del toast (TOP, BOTTOM, CENTER)
+                                  timeInSecForIosWeb:
+                                      1, // Durata del toast per iOS e Web (in secondi)
+                                  backgroundColor:
+                                      Colors.grey, // Colore di sfondo del toast
+                                  textColor: Colors
+                                      .white, // Colore del testo del toast
+                                  fontSize:
+                                      15.0, // Dimensione del testo del toast
                                 );
 
-                                if(result=="Registrazione avvenuta"){
+                                if (result == "Registrazione avvenuta") {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => MyBottomNavigationBar()), // Assicurati che LoginScreen sia il nome della tua schermata di accesso
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MyBottomNavigationBar()), // Assicurati che LoginScreen sia il nome della tua schermata di accesso
                                   );
                                 }
-
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF00BFFF), // Colore blu per il pulsante
+                                backgroundColor: const Color(
+                                    0xFF00BFFF), // Colore blu per il pulsante
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                                 minimumSize: const Size(
-                                  double.infinity, // Larghezza massima disponibile
+                                  double
+                                      .infinity, // Larghezza massima disponibile
                                   50.0, // Altezza fissa del pulsante
                                 ),
                               ),
@@ -277,7 +216,6 @@ class _SignupState extends State<Signup> {
                               ),
                             ),
                           ),
-
                           const SizedBox(height: 16.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -289,7 +227,9 @@ class _SignupState extends State<Signup> {
                                   // Utilizza Navigator.push per navigare verso la schermata Login.dart
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => Login()), // Assicurati che LoginScreen sia il nome della tua schermata di accesso
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Login()), // Assicurati che LoginScreen sia il nome della tua schermata di accesso
                                   );
                                 },
                                 child: const Text(
@@ -301,7 +241,6 @@ class _SignupState extends State<Signup> {
                                   ),
                                 ),
                               ),
-
                             ],
                           ),
                         ],
@@ -312,6 +251,35 @@ class _SignupState extends State<Signup> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  // Funzione per creare i widget di TextFormField da inserire nel form
+  Widget createTextField({
+    TextEditingController? controller,
+    String labelText = "",
+    IconData? prefixIcon,
+    double height = 50.0,
+    bool obscureText = false, // Aggiungi l'opzione per l'attributo obscureText
+  }) {
+    return Container(
+      height: height,
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        color: const Color(0x1A00bfff),
+      ),
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscureText, // Imposta l'attributo obscureText
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          labelText: labelText,
+          prefixIcon: prefixIcon != null
+              ? Icon(prefixIcon, color: const Color(0xFF00BFFF))
+              : null,
         ),
       ),
     );
