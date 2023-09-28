@@ -1,10 +1,7 @@
-import 'package:easy_move_flutter/Models/Veicolo.dart'; // Assicurati di importare la classe Veicolo
+import 'package:easy_move_flutter/Models/Veicolo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
-import '../Models/Veicolo.dart';
-
-
 
 class VeicoloRepository {
   final _firestore = FirebaseFirestore.instance;
@@ -20,10 +17,12 @@ class VeicoloRepository {
       ) async {
     String message;
     try {
-
-
+      // Verifica se la targa esiste già prima di inserire il veicolo
+      if (await isTargaAlreadyExists(targa)) {
+        message = "Una vettura con questa targa è già presente nel database";
+      } else {
         final newVeicolo = Veicolo(
-          idGuidatore: idGuidatore, // Utilizzo l'ID dell'utente come chiave per il veicolo
+          idGuidatore: idGuidatore,
           modello: modello,
           targa: targa,
           capienza: capienza,
@@ -32,20 +31,26 @@ class VeicoloRepository {
         );
 
         // Registra i dati del veicolo in Firestore
-        await _firestore.collection('vans').doc(newVeicolo.targa).set(newVeicolo.toMap());
+        await _firestore
+            .collection('vans')
+            .doc(newVeicolo.targa)
+            .set(newVeicolo.toMap());
 
         message = "Registrazione del veicolo avvenuta";
-
+      }
     } catch (e) {
-      message = e.toString(); // Restituisce un messaggio di errore in caso di fallimento
+      message = e.toString();
     }
     return message;
   }
 
+
   // Metodo per caricare l'immagine in Firebase Storage
   Future<String> uploadImage(File imageFile) async {
     try {
-      final storageRef = _fireStorage.ref().child('images/${DateTime.now().millisecondsSinceEpoch}');
+      final storageRef = _fireStorage
+          .ref()
+          .child('images/${DateTime.now().millisecondsSinceEpoch}');
 
       await storageRef.putFile(imageFile);
       final imageUrl = await storageRef.getDownloadURL();
@@ -57,12 +62,12 @@ class VeicoloRepository {
     }
   }
 
-
   Future<List<Veicolo>> getVansCollection() async {
     List<Veicolo> vansList = [];
 
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('vans').get();
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('vans').get();
 
       for (var van in querySnapshot.docs) {
         var data = van.data() as Map<String, dynamic>;
@@ -86,17 +91,20 @@ class VeicoloRepository {
     }
   }
 
+  // Metodo che controlla se è già presente una Targa in firestore
+  Future<bool> isTargaAlreadyExists(String targa) async {
+    try {
+      final snapshot = await _firestore
+          .collection('vans')
+          .doc(targa)
+          .get();
 
-
-
-
-
-
-
-
-
-
-
+      return snapshot.exists;
+    } catch (e) {
+      // Gestisci l'errore qui, ad esempio, loggandolo o ritornando false in caso di errore
+      return false;
+    }
+  }
 
 
 

@@ -134,7 +134,7 @@ class Login extends StatelessWidget {
                                 if(result=="Accesso avvenuto con successo"){
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => MyBottomNavigationBar()), // Assicurati che LoginScreen sia il nome della tua schermata di accesso
+                                    MaterialPageRoute(builder: (context) => const BottomNavigationBarApp()), // Assicurati che LoginScreen sia il nome della tua schermata di accesso
                                   );
                                 }
                               },

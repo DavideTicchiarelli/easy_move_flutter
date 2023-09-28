@@ -43,6 +43,7 @@ class UserRepository {
   }
 
 
+  // Metodo per l'autenticazione di un Utente
   Future<String?> login(String email, String password) async {
     String message;
     try {
@@ -60,6 +61,11 @@ class UserRepository {
       message = "Email e/o Password errati"; // Restituisce un messaggio di errore in caso di fallimento
     }
     return message;
+  }
+
+  // Metodo per il logout
+  Future<void> logout() async {
+    await _auth.signOut();
   }
 
 }

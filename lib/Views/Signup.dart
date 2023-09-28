@@ -42,8 +42,7 @@ class _SignupState extends State<Signup> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(
-                        top: 44.0, left: 15.0),
+                    margin: const EdgeInsets.only(top: 44.0, left: 15.0),
                     child: FloatingActionButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -58,8 +57,8 @@ class _SignupState extends State<Signup> {
                   const Center(
                     child: Icon(
                       Icons.app_registration,
-                      size: 150.0, // Larghezza desiderata
-                      color: Colors.white, // Colore dell'icona
+                      size: 150.0,
+                      color: Colors.white,
                     ),
                   ),
                   const Center(
@@ -85,6 +84,7 @@ class _SignupState extends State<Signup> {
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: [
+                          // Richiamo la funzione per creare i vari campi da compilare nel form
                           createTextField(
                             controller: nomeController,
                             labelText: "Nome",
@@ -127,9 +127,7 @@ class _SignupState extends State<Signup> {
                               children: [
                                 Checkbox(
                                   value: isChecked,
-                                  activeColor: const Color(
-                                      0xFF00BFFF), // Imposta il colore attivo
-
+                                  activeColor: const Color(0xFF00BFFF),
                                   onChanged: (newBool) {
                                     setState(() {
                                       isChecked = newBool!;
@@ -171,18 +169,15 @@ class _SignupState extends State<Signup> {
 
                                 Fluttertoast.showToast(
                                   msg: "$result", // Messaggio del toast
-                                  toastLength: Toast
-                                      .LENGTH_SHORT, // Durata del toast (SHORT o LONG)
+                                  toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity
-                                      .BOTTOM, // Posizione del toast (TOP, BOTTOM, CENTER)
+                                      .BOTTOM, // Posizione (TOP, BOTTOM, CENTER)
                                   timeInSecForIosWeb:
                                       1, // Durata del toast per iOS e Web (in secondi)
                                   backgroundColor:
-                                      Colors.grey, // Colore di sfondo del toast
-                                  textColor: Colors
-                                      .white, // Colore del testo del toast
-                                  fontSize:
-                                      15.0, // Dimensione del testo del toast
+                                      Colors.grey, // Colore di sfondo
+                                  textColor: Colors.white, // Colore del testo
+                                  fontSize: 15.0, // Dimensione del testo
                                 );
 
                                 if (result == "Registrazione avvenuta") {
@@ -190,7 +185,7 @@ class _SignupState extends State<Signup> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            MyBottomNavigationBar()), // Assicurati che LoginScreen sia il nome della tua schermata di accesso
+                                            const BottomNavigationBarApp()),
                                   );
                                 }
                               },

@@ -4,25 +4,23 @@ import 'AggiungiVeicolo.dart';
 import 'Profilo.dart';
 import 'PannelloRichieste.dart';
 
-
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-
-      home: MyBottomNavigationBar(),
+      home: BottomNavigationBarApp(),
     );
   }
 }
 
-class MyBottomNavigationBar extends StatefulWidget {
-  const MyBottomNavigationBar({super.key});
+class BottomNavigationBarApp extends StatefulWidget {
+  const BottomNavigationBarApp({super.key});
 
   @override
-  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
+  _BottomNavigationBarAppState createState() => _BottomNavigationBarAppState();
 }
 
-class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
   int _currentIndex = 0;
 
   // Lista delle pagine da mostrare nella bottom bar
@@ -36,7 +34,6 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

@@ -1,11 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:easy_move_flutter/ViewModels/VeicoloViewModel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-
-
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MaterialApp(home: AggiungiVeicolo()));
+}
 
 class AggiungiVeicolo extends StatefulWidget {
   const AggiungiVeicolo({super.key});
@@ -21,21 +25,22 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
   TextEditingController altezzaController = TextEditingController();
   TextEditingController lunghezzaController = TextEditingController();
   TextEditingController larghezzaController = TextEditingController();
-  TextEditingController   tariffaController = TextEditingController();
+  TextEditingController tariffaController = TextEditingController();
 
   String? _imageUrl;
 
   final VeicoloViewModel veicoloViewModel = VeicoloViewModel();
 
   Future<void> pickImage() async {
-      final picker = ImagePicker();
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-      if (pickedFile != null) {
-        setState(() {
-          _imageUrl = pickedFile.path; // Memorizza l'URL dell'immagine selezionata
-        });
-      }
+    if (pickedFile != null) {
+      setState(() {
+        _imageUrl =
+            pickedFile.path; // Memorizza l'URL dell'immagine selezionata
+      });
+    }
   }
 
   @override
@@ -51,7 +56,8 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 40.0), // Aggiungi il margine sopra l'icona
+                    margin: const EdgeInsets.only(
+                        top: 40.0), // Aggiungi il margine sopra l'icona
                     child: const Center(
                       child: Icon(
                         Icons.car_rental,
@@ -60,7 +66,6 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                       ),
                     ),
                   ),
-
                   const Center(
                     child: Text(
                       "Aggiungi Veicolo",
@@ -72,7 +77,6 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                     ),
                   ),
                   const SizedBox(height: 16.0),
-
                   const SizedBox(height: 16.0),
                   Material(
                     elevation: 4.0,
@@ -86,198 +90,113 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0), // Imposta i margini desiderati
-                            height: 50.0, // Imposta l'altezza desiderata
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0), // Imposta il radius a 15dp
-                              color: const Color(0x1A00bfff), // Colore di sfondo
-                            ),
-                            child: TextFormField(
-                              controller: modelloController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none, // Rimuovi il bordo predefinito
-                                labelText: "Modello",
-                                prefixIcon: Icon(
-                                  Icons.airport_shuttle,
-                                  color: Color(0xFF00BFFF), // Colore blu come il colore dello sfondo
-                                ),
-                              ),
-                            ),
+
+                          createTextField(
+                            modelloController,
+                            "Modello",
+                            Icons.airport_shuttle,
+                            TextInputType.text,
                           ),
 
                           const SizedBox(height: 15.0),
-                          Container(
-                            height: 50.0, // Imposta l'altezza
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0), // Imposta i margini
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0), // Imposta il radius a 15dp
-                              color: const Color(0x1A00bfff), // Colore di sfondo
-                            ),
-                            child: TextFormField(
-                              controller: targaController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none, // Rimuovi il bordo predefinito
-                                labelText: "Targa",
-                                prefixIcon: Icon(
-                                  Icons.calendar_view_day,
-                                  color: Color(0xFF00BFFF),
-                                ),
-                              ),
-                            ),
+                          createTextField(
+                            targaController,
+                            "Targa",
+                            Icons.calendar_view_day,
+                            TextInputType.text,
                           ),
-
                           const SizedBox(height: 15.0),
+
                           Container(
                             height: 50.0, // Imposta l'altezza
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0), // Imposta i margini
+                            margin: const EdgeInsets.only(
+                                left: 20.0, right: 20.0), // Imposta i margini
 
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0), // Imposta il radius a 15dp
-                              color: const Color(0x1A00bfff), // Colore di sfondo
+                              borderRadius: BorderRadius.circular(
+                                  15.0), // Imposta il radius a 15dp
+                              color:
+                                  const Color(0x1A00bfff), // Colore di sfondo
                             ),
                             child: TextFormField(
                               controller: locazioneController,
                               decoration: const InputDecoration(
-                                border: InputBorder.none, // Rimuovi il bordo predefinito
+                                border: InputBorder
+                                    .none, // Rimuovi il bordo predefinito
                                 labelText: "Locazione",
                                 prefixIcon: Icon(
                                   Icons.location_on,
-                                  color: Color(0xFF00BFFF), // Colore blu come il colore dello sfondo
+                                  color: Color(
+                                      0xFF00BFFF), // Colore blu come il colore dello sfondo
                                 ),
                               ),
                             ),
                           ),
-
                           const SizedBox(height: 15.0),
-                          Container(
-                            height: 50.0,
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0), // Imposta i margini
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: const Color(0x1A00bfff), // Imposta il colore personalizzato
-                            ),
-                            child: TextFormField(
-                              controller: altezzaController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "Altezza cassone in cm",
-                                prefixIcon: Icon(
-                                  Icons.height,
-                                  color: Color(0xFF00BFFF), // Colore blu come il colore dello sfondo
-                                ),
-                              ),
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            ),
+                          createTextField(
+                            altezzaController,
+                            "Altezza cassone in cm",
+                            Icons.height,
+                            TextInputType.numberWithOptions(decimal: true),
                           ),
                           const SizedBox(height: 15.0),
-                          Container(
-                            height: 50.0,
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0), // Imposta i margini
-
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: const Color(0x1A00bfff), // Imposta il colore personalizzato
-                            ),
-                            child: TextFormField(
-                              controller: lunghezzaController,
-
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "Lunghezza cassone in cm",
-                                prefixIcon: Icon(
-                                  Icons.compare_arrows,
-                                  color: Color(0xFF00BFFF), // Colore blu come il colore dello sfondo
-                                ),
-                              ),
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            ),
-                          ),
-
-                          const SizedBox(height: 15.0),
-
-                          Container(
-                            height: 50.0,
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: const Color(0x1A00bfff),
-                            ),
-                            child: TextFormField(
-                              controller: larghezzaController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "Larghezza cassone in cm",
-                                prefixIcon: Icon(
-                                  Icons.close_fullscreen,
-                                  color: Color(0xFF00BFFF),
-                                ),
-                              ),
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            ),
+                          createTextField(
+                            lunghezzaController,
+                            "Lunghezza cassone in cm",
+                            Icons.compare_arrows,
+                            TextInputType.numberWithOptions(decimal: true),
                           ),
                           const SizedBox(height: 15.0),
-
-                          Container(
-                            height: 50.0,
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: const Color(0x1A00bfff),
-                            ),
-                            child: TextFormField(
-                              controller: tariffaController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "Tariffa €/Km",
-                                prefixIcon: Icon(
-                                  Icons.euro,
-                                  color: Color(0xFF00BFFF),
-                                ),
-                              ),
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            ),
+                          createTextField(
+                            larghezzaController,
+                            "Larghezza cassone in cm",
+                            Icons.close_fullscreen,
+                            TextInputType.numberWithOptions(decimal: true),
                           ),
-
                           const SizedBox(height: 15.0),
-
+                          createTextField(
+                            tariffaController,
+                            "Tariffa €/Km",
+                            Icons.euro,
+                            TextInputType.numberWithOptions(decimal: true),
+                          ),
+                          const SizedBox(height: 15.0),
                           Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 _imageUrl != null
                                     ? Image.file(
-                                  File(_imageUrl!),
-                                  height: 150.0,
-                                  width: 150.0,
-                                  fit: BoxFit.cover,
-                                )
+                                        File(_imageUrl!),
+                                        height: 150.0,
+                                        width: 150.0,
+                                        fit: BoxFit.cover,
+                                      )
                                     : const Icon(
-                                  Icons.image,
-                                  size: 150.0,
-                                  color: Colors.grey, // Colore dell'icona di default
-                                ),
+                                        Icons.image,
+                                        size: 150.0,
+                                        color: Colors
+                                            .grey, // Colore dell'icona di default
+                                      ),
                                 const SizedBox(height: 2.5),
                                 ElevatedButton(
                                   onPressed: pickImage,
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF00BFFF), // Cambia il color a quello che preferisci
+                                    backgroundColor: const Color(
+                                        0xFF00BFFF), // Cambia il color a quello che preferisci
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                   ),
                                   child: const Text("Seleziona un'immagine"),
                                 )
-
                               ],
                             ),
                           ),
-
-
                           const SizedBox(height: 15.0),
-
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
                               onPressed: () async {
                                 // Recupera i valori dai controller
@@ -289,9 +208,9 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                                 String larghezza = larghezzaController.text;
                                 String tariffa = tariffaController.text;
 
-
                                 // Chiama il metodo registerVehicle dal VeicoloRepository
-                                String message = await veicoloViewModel.registerVehicle(
+                                String message =
+                                    await veicoloViewModel.registerVehicle(
                                   "String guidatoreId",
                                   modello,
                                   targa,
@@ -305,19 +224,23 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                                 // Mostra il messaggio come un toast
                                 Fluttertoast.showToast(
                                   msg: message,
-                                  toastLength: Toast.LENGTH_SHORT, // Durata del toast
-                                  gravity: ToastGravity.BOTTOM, // Posizione del toast sulla schermata
+                                  toastLength:
+                                      Toast.LENGTH_SHORT, // Durata del toast
+                                  gravity: ToastGravity
+                                      .BOTTOM, // Posizione del toast sulla schermata
                                   backgroundColor: Colors.grey,
                                   textColor: Colors.white,
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF00BFFF), // Colore blu per il pulsante
+                                backgroundColor: const Color(
+                                    0xFF00BFFF), // Colore blu per il pulsante
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                                 minimumSize: const Size(
-                                  double.infinity, // Larghezza massima disponibile
+                                  double
+                                      .infinity, // Larghezza massima disponibile
                                   50.0, // Altezza fissa del pulsante
                                 ),
                               ),
@@ -343,12 +266,45 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
       ),
     );
   }
-}
 
+  // Funzione per creare un campo di testo personalizzato
+  Widget createTextField(
+      TextEditingController controller,
+      String labelText,
+      IconData prefixIcon,
+      TextInputType keyboardType,
+      ) {
 
+    return Container(
+      height: 50.0,
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        color: const Color(0x1A00bfff),
+      ),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          labelText: labelText,
+          prefixIcon: Icon(
+            prefixIcon,
+            color: Color(0xFF00BFFF),
+          ),
+        ),
+        keyboardType: keyboardType,
+        onChanged: (value) {
+          if (controller == targaController) {
+            // Converte il testo in maiuscolo solo se il controller è il controller della targa
+            controller.text = value.toUpperCase();
+            // Imposta la selezione del testo alla fine per evitare il posizionamento del cursore all'inizio
+            controller.selection = TextSelection.fromPosition(
+              TextPosition(offset: controller.text.length),
+            );
+          }
+        },
+      ),
+    );
+  }
 
-void main() {
-  runApp(const MaterialApp(
-    home: AggiungiVeicolo(),
-  ));
 }
