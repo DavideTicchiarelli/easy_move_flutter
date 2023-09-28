@@ -3,11 +3,6 @@ import 'package:easy_move_flutter/Views/Signup.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: Profilo(),
-  ));
-}
 
 final userViewModel= UserViewModel();
 

@@ -72,46 +72,17 @@ class Login extends StatelessWidget {
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                            height: 50.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: const Color(0x1A00bfff),
-                            ),
-                            child: TextFormField(
-                              controller: emailController,
-
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "Email",
-                                prefixIcon: Icon(
-                                  Icons.mail,
-                                  color: Color(0xFF00BFFF),
-                                ),
-                              ),
-                            ),
+                          createTextField(
+                            controller: emailController,
+                            labelText: "Email",
+                            prefixIcon: Icons.mail,
                           ),
                           const SizedBox(height: 15.0),
-                          Container(
-                            height: 50.0,
-                            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: const Color(0x1A00bfff),
-                            ),
-                            child: TextFormField(
-                              controller: passwordController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "Password",
-                                prefixIcon: Icon(
-                                  Icons.lock,
-                                  color: Color(0xFF00BFFF),
-                                ),
-                              ),
-                              obscureText: true,
-                            ),
+                          createTextField(
+                            controller: passwordController,
+                            labelText: "Password",
+                            prefixIcon: Icons.lock,
+                            obscureText: true, // Set obscureText to true for password field
                           ),
                           const SizedBox(height: 15.0),
                           Padding(
@@ -195,6 +166,36 @@ class Login extends StatelessWidget {
       ),
     );
   }
+
+  // Funzione per la creazione dei campi da comppilare nel form
+  Widget createTextField({
+    TextEditingController? controller,
+    String labelText = "",
+    IconData? prefixIcon,
+    double height = 50.0,
+    bool obscureText = false,
+  }) {
+    return Container(
+      height: height,
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        color: const Color(0x1A00bfff),
+      ),
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscureText, // Use the provided obscureText option
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          labelText: labelText,
+          prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: Color(0xFF00BFFF)) : null,
+        ),
+      ),
+    );
+  }
+
+
+
 }
 
 

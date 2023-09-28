@@ -1,16 +1,9 @@
 import 'package:easy_move_flutter/Views/Profilo.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:easy_move_flutter/ViewModels/VeicoloViewModel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MaterialApp(home: AggiungiVeicolo()));
-}
 
 class AggiungiVeicolo extends StatefulWidget {
   const AggiungiVeicolo({super.key});
@@ -167,7 +160,7 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                                     ? Image.file(
                                         File(_imageUrl!),
                                         height: 150.0,
-                                        width: 150.0,
+                                        width: 250,
                                         fit: BoxFit.cover,
                                       )
                                     : const Icon(
