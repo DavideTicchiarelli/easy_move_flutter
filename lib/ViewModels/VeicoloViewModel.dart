@@ -1,6 +1,8 @@
 import 'package:easy_move_flutter/Repositories/VeicoloRepository.dart'; // Importa il tuo VeicoloRepository
 import 'dart:io';
 
+import '../Models/Veicolo.dart';
+
 class VeicoloViewModel {
   final VeicoloRepository veicoloRepository = VeicoloRepository();
 
@@ -67,6 +69,17 @@ class VeicoloViewModel {
     // Validazione targhe italiane
     RegExp regex = RegExp(r'^[A-Z]{2}\d{3}[A-Z]{2}$');
     return regex.hasMatch(targa);
+  }
+
+
+  Future<List<Veicolo>> getVansList() async {
+    try {
+      return await veicoloRepository.getVansCollection();
+    } catch (e) {
+      // Gestisci eventuali eccezioni qui, se necessario
+      print("Errore durante il recupero dei veicoli: $e");
+      return [];
+    }
   }
 
 }

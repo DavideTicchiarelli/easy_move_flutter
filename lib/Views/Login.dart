@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'MyBottomNavigationBar.dart';
+import 'BottomNavigationBar.dart';
 import 'Signup.dart';
 import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
 
-
-final UserViewModel userViewModel = UserViewModel();
+void main() {
+  runApp(MaterialApp(
+    home: Login(),
+  ));
+}
 
 class Login extends StatelessWidget {
+
+  final UserViewModel userViewModel = UserViewModel();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -192,8 +197,4 @@ class Login extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: Login(),
-  ));
-}
+

@@ -1,44 +1,39 @@
 import 'package:flutter/material.dart';
 
-class Richieste extends StatefulWidget {
+class PannelloRichieste extends StatefulWidget {
+  const PannelloRichieste({super.key});
+
   @override
-  _RichiestePageState createState() => _RichiestePageState();
+  _PannelloRichiesteState createState() => _PannelloRichiesteState();
 }
 
-class _RichiestePageState extends State<Richieste> {
+class _PannelloRichiesteState extends State<PannelloRichieste> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF00BFFF),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(30.0),
+            bottomRight: Radius.circular(30.0),
+          ),
+        ),
+
+        toolbarHeight: 70.0,
+        title: const Text(
+          'Richieste',
+          style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold, // Imposta il testo in grassetto
+          ),
+        ),
+        automaticallyImplyLeading: false, // Questo rimuove l'icona della freccia
+      ),
+
       body: Column(
         children: [
-          // Card blu a tutto schermo
-          Container(
-            width: double.infinity, // Larghezza massima
-            padding: const EdgeInsets.only(top: 30, bottom: 20), // Aggiungi spazio sopra (30) e sotto (20) il testo
-            decoration: const BoxDecoration(
-              color: Color(0xFF00BFFF), // Colore blu
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30.0), // Angolo arrotondato in basso a sinistra
-                bottomRight: Radius.circular(30.0), // Angolo arrotondato in basso a destra
-              ),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.only(left: 5), // Sposta il testo di 20 dp verso destra
-              child: Text(
-                'Gestione Richieste',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white, // Colore del testo bianco
-                ),
-              ),
-            ),
-          ),
-
-
-
-
-
           // Card per le statistiche
           Card(
             margin: const EdgeInsets.all(20), // Margine intorno alla seconda card

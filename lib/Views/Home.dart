@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'ListaVeicoli.dart';
+
 void main() {
   runApp(const MaterialApp(
     home: Home(),
@@ -65,8 +67,12 @@ class Home extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             margin: const EdgeInsets.only(bottom: 5.0),
             child: ElevatedButton(
-              onPressed: () async {
+              onPressed: () {
                 // Azione quando il pulsante viene premuto
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ListaVeicoli()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF00BFFF),
@@ -79,7 +85,7 @@ class Home extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                "Invia",
+                "CERCA VEICOLI",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16.0,

@@ -1,16 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'AggiungiVeicolo.dart';
 import 'Profilo.dart';
-import 'Richieste.dart';
+import 'PannelloRichieste.dart';
 
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
 
 class MyApp extends StatelessWidget {
   @override
@@ -34,10 +27,10 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
   // Lista delle pagine da mostrare nella bottom bar
   final List<Widget> _pages = [
-    Home(),
-    AggiungiVeicolo(),
-    Richieste(),
-    Profilo(),
+    const Home(),
+    const AggiungiVeicolo(),
+    const PannelloRichieste(),
+    const Profilo(),
   ];
 
   @override

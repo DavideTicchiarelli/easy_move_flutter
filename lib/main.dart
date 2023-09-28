@@ -15,12 +15,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
 
-      home: Index(),
+    return MaterialApp(
+      theme: ThemeData(
+        primaryColor: const Color(0xFF00BFFF),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          selectedItemColor: Color(0xFF00BFFF),
+        ),
+        tabBarTheme: const TabBarTheme(
+          indicator: UnderlineTabIndicator(
+            borderSide: BorderSide(width: 2.0, color: Color(0xFF00BFFF)),
+          ),
+        ),
+
+        inputDecorationTheme: const InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: Colors.grey, // Cambia il colore della label quando è sopra il campo di testo
+          ),
+        ),
+      ),
+      home: const Index(),
     );
   }
 }
+
+
+
+
 
 class Index extends StatelessWidget {
   const Index({Key? key});
@@ -125,7 +146,7 @@ class Index extends StatelessWidget {
                               onPressed: () {
                                 // Azione quando viene premuto il pulsante "Registrati"
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Signup(),
+                                  builder: (context) => const Signup(),
                                 ));
                               },
                               style: ElevatedButton.styleFrom(

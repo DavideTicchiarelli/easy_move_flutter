@@ -1,4 +1,4 @@
-import 'package:easy_move_flutter/Views/MyBottomNavigationBar.dart';
+import 'package:easy_move_flutter/Views/BottomNavigationBar.dart';
 import 'package:flutter/material.dart';
 import 'Login.dart';
 import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 final UserViewModel userViewModel = UserViewModel();
 
 
-Future<void> main() async {
+void main() {
   runApp(const MaterialApp(
     home: Signup(),
   ));
@@ -19,7 +19,6 @@ class Signup extends StatefulWidget {
   const Signup({super.key});
 
   @override
-
   _SignupState createState() => _SignupState();
 }
 
