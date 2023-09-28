@@ -49,6 +49,17 @@ class UserViewModel extends ChangeNotifier {
     }
   }
 
+  String getCurrentUserId() {
+    try {
+      // Usa l'istanza di AuthManager (o del modulo in cui è definito) per chiamare getCurrentUserId
+      String userId = userRepository.getCurrentUserId();
+      return userId;
+    } catch (e) {
+      print("Errore: ${e.toString()}");
+      return '';
+    }
+  }
+
 }
 
 

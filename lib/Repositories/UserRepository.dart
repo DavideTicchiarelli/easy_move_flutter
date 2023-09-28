@@ -68,4 +68,13 @@ class UserRepository {
     await _auth.signOut();
   }
 
+  String getCurrentUserId() {
+    final auth.User? authUser = _auth.currentUser;
+    if (authUser != null) {
+      return authUser.uid;
+    } else {
+      throw Exception("Nessun utente autenticato.");
+    }
+  }
+
 }

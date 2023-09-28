@@ -1,3 +1,4 @@
+import 'package:easy_move_flutter/Views/Profilo.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -90,14 +91,12 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: [
-
                           createTextField(
                             modelloController,
                             "Modello",
                             Icons.airport_shuttle,
                             TextInputType.text,
                           ),
-
                           const SizedBox(height: 15.0),
                           createTextField(
                             targaController,
@@ -106,7 +105,6 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                             TextInputType.text,
                           ),
                           const SizedBox(height: 15.0),
-
                           Container(
                             height: 50.0, // Imposta l'altezza
                             margin: const EdgeInsets.only(
@@ -211,7 +209,7 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                                 // Chiama il metodo registerVehicle dal VeicoloRepository
                                 String message =
                                     await veicoloViewModel.registerVehicle(
-                                  "String guidatoreId",
+                                  userViewModel.getCurrentUserId(),
                                   modello,
                                   targa,
                                   altezza,
@@ -269,12 +267,11 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
 
   // Funzione per creare un campo di testo personalizzato
   Widget createTextField(
-      TextEditingController controller,
-      String labelText,
-      IconData prefixIcon,
-      TextInputType keyboardType,
-      ) {
-
+    TextEditingController controller,
+    String labelText,
+    IconData prefixIcon,
+    TextInputType keyboardType,
+  ) {
     return Container(
       height: 50.0,
       margin: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -306,5 +303,4 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
       ),
     );
   }
-
 }
