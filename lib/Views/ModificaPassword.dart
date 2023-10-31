@@ -38,7 +38,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                   const Center(
                     child: Icon(
-                      Icons.account_circle,
+                      Icons.lock,
                       size: 150.0,
                       color: Colors.white,
                     ),

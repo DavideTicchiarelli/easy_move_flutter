@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:easy_move_flutter/Models/User.dart' as myUser;
 
+import 'ModificaEmail.dart';
+
 final userViewModel= UserViewModel();
 
 class Profilo extends StatelessWidget {
@@ -91,8 +93,7 @@ class Profilo extends StatelessWidget {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                // Aggiungi l'azione per "MODIFICA EMAIL" qui
-                                // Ad esempio: Navigator.push(context, MaterialPageRoute(builder: (context) => ModificaEmailScreen()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => ModificaEmail()));
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
