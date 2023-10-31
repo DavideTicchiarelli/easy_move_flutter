@@ -70,9 +70,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 "Inserisci la tua Email per ricevere la mail di modifica",
                                 style: TextStyle(
                                   color: Color(0xFF00BFFF),
-                                  fontSize: 10.0,
+                                  fontSize: 12.0,
                                 ),
                               ),
+
+                          const SizedBox(height: 10.0),
 
                           createTextField(
                             controller: emailController,
