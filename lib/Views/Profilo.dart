@@ -88,7 +88,6 @@ class Profilo extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ElevatedButton(
                               onPressed: () {
@@ -100,6 +99,7 @@ class Profilo extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
+                                minimumSize: Size(double.infinity, 60), // Imposta l'altezza uguale a quella del Logout
                               ),
                               child: const Text(
                                 "MODIFICA EMAIL",
@@ -110,10 +110,7 @@ class Profilo extends StatelessWidget {
                                 ),
                               ),
                             ),
-
-                            const SizedBox(height: 10),
-
-
+                            SizedBox(height: 3), // Spaziatura di 3px
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPasswordScreen()));
@@ -123,6 +120,7 @@ class Profilo extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
+                                minimumSize: Size(double.infinity, 60), // Imposta l'altezza uguale a quella del Logout
                               ),
                               child: const Text(
                                 "MODIFICA PASSWORD",
@@ -135,6 +133,7 @@ class Profilo extends StatelessWidget {
                             ),
                           ],
                         ),
+
                       ),
                       const SizedBox(height: 20),
                       SizedBox(
