@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_move_flutter/Repositories/UserRepository.dart';
 import 'package:easy_move_flutter/Models/User.dart' as myUser;
+
 
 
 
@@ -63,6 +65,34 @@ class UserViewModel extends ChangeNotifier {
       ) {
     userRepository.sendPasswordResetEmail(email, onSuccess, onFailure);
   }
+
+  Future<void> modifyMailWithReauthentication(String currentMail, String newMail, String password, Function(bool, String?) callback) async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      callback(false, "Utente non autenticato");
+      return;
+    }
+
+    try {
+      await userRepository.reauthenticateAndUpdateEmail(
+        user,
+        currentMail,
+        newMail,
+        password,
+            (bool success, String? message) {
+          if (success) {
+            callback(true, "Indirizzo email aggiornato con successo");
+          } else {
+            callback(false, message);
+          }
+        },
+      );
+    } catch (error) {
+      callback(false, error.toString());
+    }
+  }
+
 
 
 }

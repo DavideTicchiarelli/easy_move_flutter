@@ -108,4 +108,37 @@ class UserRepository {
       onFailure();
     }
   }
+
+  Future<void> reauthenticateAndUpdateEmail(User user, String currentMail, String newMail, String password, Function(bool, String?) callback) async {
+    try {
+      AuthCredential credential = EmailAuthProvider.credential(email: currentMail, password: password);
+
+      await user.reauthenticateWithCredential(credential);
+
+      await user.updateEmail(newMail);
+
+      updateUserDocument(user.uid, newMail, (updateSuccess, updateMessage) {
+        if (updateSuccess) {
+          callback(true, "Indirizzo email aggiornato con successo");
+        } else {
+          callback(false, updateMessage);
+        }
+      });
+    } catch (error) {
+      callback(false, error.toString());
+    }
+  }
+
+  Future<void> updateUserDocument(String userId, String newEmail, Function(bool, String?) callback) async {
+    try {
+      final userDocRef = _firestore.collection("users").doc(userId);
+
+      await userDocRef.update({"email": newEmail});
+
+      callback(true, null);
+    } catch (error) {
+      callback(false, "Errore durante l'aggiornamento dell'indirizzo email nel documento");
+    }
+  }
+
 }

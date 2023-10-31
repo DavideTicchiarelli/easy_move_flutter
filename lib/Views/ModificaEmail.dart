@@ -1,4 +1,10 @@
+import 'package:easy_move_flutter/Models/User.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
+import 'package:easy_move_flutter/Models/User.dart' as myUser;
+
+
 
 class ModificaEmail extends StatefulWidget {
   @override
@@ -8,6 +14,7 @@ class ModificaEmail extends StatefulWidget {
 class _ModificaEmailState extends State<ModificaEmail> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final userviewmodel = UserViewModel();
 
 
   Widget build(BuildContext context) {
@@ -121,8 +128,39 @@ class _ModificaEmailState extends State<ModificaEmail> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
-                              onPressed: () {
-                                // Implement the reset password functionality here
+                              onPressed: () async {
+                                myUser.User? currentUser = await userviewmodel.getCurrentUser();
+
+                                if (currentUser != null) {
+                                  String currentEmail = currentUser.email;
+                                  String newMail = emailController.text;
+                                  String password = passwordController.text;
+
+                                  await userviewmodel.modifyMailWithReauthentication(
+                                    currentEmail, newMail, password, (bool success, String message) {
+                                    if (success) {
+                                      // Email aggiornata con successo
+                                      Fluttertoast.showToast(
+                                        msg: 'Email aggiornata con successo',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                      );
+                                      Navigator.pop(context); // Torna indietro
+                                    } else {
+                                      // Mostra messaggio di errore
+                                      Fluttertoast.showToast(
+                                        msg: message,
+                                        toastLength: Toast.LENGTH_SHORT,
+                                      );
+                                    }
+                                  },
+                                  );
+                                } else {
+                                  // L'utente non è stato trovato, gestisci di conseguenza
+                                  Fluttertoast.showToast(
+                                    msg: 'Utente non trovato',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                  );
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF00BFFF),
@@ -142,7 +180,9 @@ class _ModificaEmailState extends State<ModificaEmail> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ),
+                            )
+
+
                           ),
                           const SizedBox(height: 16.0),
                         ],
