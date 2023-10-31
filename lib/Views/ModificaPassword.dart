@@ -86,7 +86,21 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                // Implement the reset password functionality here
+                                userViewModel.sendPasswordResetEmail(
+                                  emailController.text,
+                                      () {
+                                    Fluttertoast.showToast(
+                                      msg: 'Controlla la tua Email',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                    );
+                                  },
+                                      () {
+                                    Fluttertoast.showToast(
+                                      msg: 'La Email inserita non è corretta',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                    );
+                                  },
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF00BFFF),
