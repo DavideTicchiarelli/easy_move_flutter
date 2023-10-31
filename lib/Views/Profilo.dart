@@ -99,7 +99,7 @@ class Profilo extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
-                                minimumSize: Size(double.infinity, 60), // Imposta l'altezza uguale a quella del Logout
+                                minimumSize: Size(double.infinity, 30), // Imposta l'altezza uguale a quella del Logout
                               ),
                               child: const Text(
                                 "MODIFICA EMAIL",
@@ -120,7 +120,7 @@ class Profilo extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
-                                minimumSize: Size(double.infinity, 60), // Imposta l'altezza uguale a quella del Logout
+                                minimumSize: Size(double.infinity, 40), // Imposta l'altezza uguale a quella del Logout
                               ),
                               child: const Text(
                                 "MODIFICA PASSWORD",
