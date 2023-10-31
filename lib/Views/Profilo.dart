@@ -96,11 +96,11 @@ class Profilo extends StatelessWidget {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => ModificaEmail()));
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
+                                primary: Color(0xFF00BEFE),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
-                                minimumSize: Size(double.infinity, 30), // Imposta l'altezza uguale a quella del Logout
+                                minimumSize: Size(double.infinity, 40), // Imposta l'altezza uguale a quella del Logout
                               ),
                               child: const Text(
                                 "MODIFICA EMAIL",
@@ -117,7 +117,7 @@ class Profilo extends StatelessWidget {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPasswordScreen()));
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
+                                primary: Color(0xFF00BEFE),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
@@ -148,6 +148,8 @@ class Profilo extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
+                            minimumSize: Size(double.infinity, 40), // Imposta l'altezza uguale a quella del Logout
+
                           ),
                           child: const Text(
                             "Logout",
