@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:easy_move_flutter/Models/User.dart' as myUser;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserRepository {
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
@@ -95,4 +96,16 @@ class UserRepository {
     }
   }
 
+  Future<void> sendPasswordResetEmail(
+      String email,
+      void Function() onSuccess,
+      void Function() onFailure,
+      ) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      onSuccess();
+    } catch (e) {
+      onFailure();
+    }
+  }
 }

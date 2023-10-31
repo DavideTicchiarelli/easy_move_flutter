@@ -1,4 +1,5 @@
 import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
+import 'package:easy_move_flutter/Views/ModificaPassword.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:easy_move_flutter/Models/User.dart' as myUser;
@@ -61,7 +62,6 @@ class Profilo extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const SizedBox(height: 10),
                       FutureBuilder<myUser.User?>(
                         future: userViewModel.getCurrentUser(),
                         builder: (context, snapshot) {
@@ -86,21 +86,67 @@ class Profilo extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       SizedBox(
-                        width: double
-                            .infinity, // Imposta la larghezza come la Card
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                // Aggiungi l'azione per "MODIFICA EMAIL" qui
+                                // Ad esempio: Navigator.push(context, MaterialPageRoute(builder: (context) => ModificaEmailScreen()));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                              ),
+                              child: const Text(
+                                "MODIFICA EMAIL",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPasswordScreen()));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                              ),
+                              child: const Text(
+                                "MODIFICA PASSWORD",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
                             showLogoutDialog(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Colors.red, // Colore di sfondo del pulsante
+                            backgroundColor: Colors.red,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                           ),
                           child: const Text(
-                            "Logout", // Testo del pulsante
+                            "Logout",
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,
@@ -113,54 +159,6 @@ class Profilo extends StatelessWidget {
                   ),
                 ),
               ),
-              // Card(
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(20.0),
-              //   ),
-              //   elevation: 5.0,
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(16.0),
-              //     child: Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         const Padding(
-              //           padding: EdgeInsets.only(left: 10.0),
-              //           child: Text(
-              //             'Informazioni Personali',
-              //             style: TextStyle(
-              //               fontSize: 20,
-              //               fontWeight: FontWeight.bold,
-              //             ),
-              //           ),
-              //         ),
-              //         const SizedBox(height: 10),
-              //         FutureBuilder<myUser.User?>(
-              //           future: userViewModel.getCurrentUser(),
-              //           builder: (context, snapshot) {
-              //             if (snapshot.connectionState == ConnectionState.waiting) {
-              //               return CircularProgressIndicator();
-              //             } else if (snapshot.hasError) {
-              //               return Text("Errore nel recupero dei dati dell'utente");
-              //             } else if (snapshot.hasData) {
-              //               final user = snapshot.data!;
-              //               return Column(
-              //                 crossAxisAlignment: CrossAxisAlignment.start,
-              //                 children: [
-              //                   createTextWidget("Nome:", user.name, Colors.black),
-              //                   createTextWidget("Cognome:", user.surname, Colors.black),
-              //                   createTextWidget("Email:", user.email, Colors.black),
-              //                 ],
-              //               );
-              //             } else {
-              //               return Text("Nessun dato utente disponibile");
-              //             }
-              //           },
-              //         ),
-              //         const SizedBox(height: 20),
-              //       ],
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),

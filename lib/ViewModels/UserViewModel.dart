@@ -56,6 +56,15 @@ class UserViewModel extends ChangeNotifier {
     return userRepository.getCurrentUser();
   }
 
+  void sendPasswordResetEmail(
+      String email,
+      void Function() onSuccess,
+      void Function() onFailure,
+      ) {
+    userRepository.sendPasswordResetEmail(email, onSuccess, onFailure);
+  }
+
+
 }
 
 
