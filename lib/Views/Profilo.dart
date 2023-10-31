@@ -87,7 +87,7 @@ class Profilo extends StatelessWidget {
                       const SizedBox(height: 20),
                       SizedBox(
                         width: double.infinity,
-                        child: Row(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ElevatedButton(
@@ -96,7 +96,7 @@ class Profilo extends StatelessWidget {
                                 // Ad esempio: Navigator.push(context, MaterialPageRoute(builder: (context) => ModificaEmailScreen()));
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
+                                backgroundColor: Colors.blue,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
@@ -110,6 +110,10 @@ class Profilo extends StatelessWidget {
                                 ),
                               ),
                             ),
+
+                            const SizedBox(height: 10),
+
+
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPasswordScreen()));
