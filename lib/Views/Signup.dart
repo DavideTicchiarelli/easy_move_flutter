@@ -101,7 +101,7 @@ class _SignupState extends State<Signup> {
                           const SizedBox(height: 15.0),
                           createTextField(
                             controller: emailController,
-                            labelText: "Password",
+                            labelText: "Email",
                             prefixIcon: Icons.mail,
                             obscureText: false,
                           ),
