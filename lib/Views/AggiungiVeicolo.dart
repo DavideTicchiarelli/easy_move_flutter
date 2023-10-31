@@ -4,6 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:easy_move_flutter/ViewModels/VeicoloViewModel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import '../ViewModels/UserViewModel.dart';
+
 
 class AggiungiVeicolo extends StatefulWidget {
   const AggiungiVeicolo({super.key});
@@ -22,6 +24,7 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
   TextEditingController tariffaController = TextEditingController();
 
   String? _imageUrl;
+
 
   final VeicoloViewModel veicoloViewModel = VeicoloViewModel();
 
@@ -199,10 +202,12 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                                 String larghezza = larghezzaController.text;
                                 String tariffa = tariffaController.text;
 
+                                String userId = (await UserViewModel().getCurrentUser())?.id ?? "";
+
                                 // Chiama il metodo registerVehicle dal VeicoloRepository
                                 String message =
                                     await veicoloViewModel.registerVehicle(
-                                  userViewModel.getCurrentUserId(),
+                                  userId,
                                   modello,
                                   targa,
                                   altezza,

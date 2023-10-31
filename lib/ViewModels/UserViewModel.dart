@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:easy_move_flutter/Repositories/UserRepository.dart';
+import 'package:easy_move_flutter/Models/User.dart' as myUser;
+
+
 
 
 class UserViewModel extends ChangeNotifier {
@@ -49,15 +52,8 @@ class UserViewModel extends ChangeNotifier {
     }
   }
 
-  String getCurrentUserId() {
-    try {
-      // Usa l'istanza di AuthManager (o del modulo in cui è definito) per chiamare getCurrentUserId
-      String userId = userRepository.getCurrentUserId();
-      return userId;
-    } catch (e) {
-      print("Errore: ${e.toString()}");
-      return '';
-    }
+  Future<myUser.User?> getCurrentUser() async {
+    return userRepository.getCurrentUser();
   }
 
 }

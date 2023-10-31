@@ -1,8 +1,7 @@
 import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
-import 'package:easy_move_flutter/Views/Signup.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:easy_move_flutter/Models/User.dart' as myUser;
 
 final userViewModel= UserViewModel();
 
@@ -63,9 +62,28 @@ class Profilo extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       const SizedBox(height: 10),
-                      createTextWidget("Nome:", "prova", Colors.black),
-                      createTextWidget("Cognome:", "prova", Colors.black),
-                      createTextWidget("Email:", "contenuto", Colors.black),
+                      FutureBuilder<myUser.User?>(
+                        future: userViewModel.getCurrentUser(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text("Errore nel recupero dei dati dell'utente");
+                          } else if (snapshot.hasData) {
+                            final user = snapshot.data!;
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                createTextWidget("Nome:", user.name, Colors.black),
+                                createTextWidget("Cognome:", user.surname, Colors.black),
+                                createTextWidget("Email:", user.email, Colors.black),
+                              ],
+                            );
+                          } else {
+                            return Text("Nessun dato utente disponibile");
+                          }
+                        },
+                      ),
                       const SizedBox(height: 20),
                       SizedBox(
                         width: double
@@ -116,9 +134,28 @@ class Profilo extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      createTextWidget("Nome:", "prova", Colors.black),
-                      createTextWidget("Cognome:", "prova", Colors.black),
-                      createTextWidget("Email:", "contenuto", Colors.black),
+                      FutureBuilder<myUser.User?>(
+                        future: userViewModel.getCurrentUser(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text("Errore nel recupero dei dati dell'utente");
+                          } else if (snapshot.hasData) {
+                            final user = snapshot.data!;
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                createTextWidget("Nome:", user.name, Colors.black),
+                                createTextWidget("Cognome:", user.surname, Colors.black),
+                                createTextWidget("Email:", user.email, Colors.black),
+                              ],
+                            );
+                          } else {
+                            return Text("Nessun dato utente disponibile");
+                          }
+                        },
+                      ),
                       const SizedBox(height: 20),
                     ],
                   ),
