@@ -113,54 +113,54 @@ class Profilo extends StatelessWidget {
                   ),
                 ),
               ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                elevation: 5.0,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10.0),
-                        child: Text(
-                          'Informazioni Personali',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      FutureBuilder<myUser.User?>(
-                        future: userViewModel.getCurrentUser(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return Text("Errore nel recupero dei dati dell'utente");
-                          } else if (snapshot.hasData) {
-                            final user = snapshot.data!;
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                createTextWidget("Nome:", user.name, Colors.black),
-                                createTextWidget("Cognome:", user.surname, Colors.black),
-                                createTextWidget("Email:", user.email, Colors.black),
-                              ],
-                            );
-                          } else {
-                            return Text("Nessun dato utente disponibile");
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                    ],
-                  ),
-                ),
-              ),
+              // Card(
+              //   shape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadius.circular(20.0),
+              //   ),
+              //   elevation: 5.0,
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(16.0),
+              //     child: Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         const Padding(
+              //           padding: EdgeInsets.only(left: 10.0),
+              //           child: Text(
+              //             'Informazioni Personali',
+              //             style: TextStyle(
+              //               fontSize: 20,
+              //               fontWeight: FontWeight.bold,
+              //             ),
+              //           ),
+              //         ),
+              //         const SizedBox(height: 10),
+              //         FutureBuilder<myUser.User?>(
+              //           future: userViewModel.getCurrentUser(),
+              //           builder: (context, snapshot) {
+              //             if (snapshot.connectionState == ConnectionState.waiting) {
+              //               return CircularProgressIndicator();
+              //             } else if (snapshot.hasError) {
+              //               return Text("Errore nel recupero dei dati dell'utente");
+              //             } else if (snapshot.hasData) {
+              //               final user = snapshot.data!;
+              //               return Column(
+              //                 crossAxisAlignment: CrossAxisAlignment.start,
+              //                 children: [
+              //                   createTextWidget("Nome:", user.name, Colors.black),
+              //                   createTextWidget("Cognome:", user.surname, Colors.black),
+              //                   createTextWidget("Email:", user.email, Colors.black),
+              //                 ],
+              //               );
+              //             } else {
+              //               return Text("Nessun dato utente disponibile");
+              //             }
+              //           },
+              //         ),
+              //         const SizedBox(height: 20),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
