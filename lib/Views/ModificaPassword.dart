@@ -76,11 +76,26 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
                           const SizedBox(height: 10.0),
 
-                          createTextField(
-                            controller: emailController,
+                      Container(
+                        height: 50.0,
+                        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          color: const Color(0x1A00bfff),
+                        ),
+                        child: TextFormField(
+                          controller: emailController,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
                             labelText: "Email",
-                            prefixIcon: Icons.mail,
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: Color(0xFF00BFFF), // Imposta il colore rosso dell'icona
+                            ),
                           ),
+                        ),
+                      ),
+
                           const SizedBox(height: 15.0),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -117,34 +132,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget createTextField({
-    TextEditingController? controller,
-    String labelText = "",
-    IconData? prefixIcon,
-    double height = 50.0,
-    bool obscureText = false,
-  }) {
-    return Container(
-      height: height,
-      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.0),
-        color: const Color(0x1A00bfff),
-      ),
-      child: TextFormField(
-        controller: controller,
-        obscureText: obscureText, // Use the provided obscureText option
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          labelText: labelText,
-          prefixIcon: prefixIcon != null
-              ? Icon(prefixIcon, color: Color(0xFF00BFFF))
-              : null,
         ),
       ),
     );
