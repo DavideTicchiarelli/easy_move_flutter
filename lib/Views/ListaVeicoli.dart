@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Models/Veicolo.dart';
 import '../ViewModels/VeicoloViewModel.dart';
+import 'InoltraRichiesta.dart';
 
 class ListaVeicoli extends StatefulWidget {
   const ListaVeicoli({Key? key}) : super(key: key);
@@ -134,7 +135,7 @@ class _ListaVeicoliState extends State<ListaVeicoli> {
                                       5), // Aggiungi il margine di 5dp qui
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      // Add your code for "Richiedi trasporto" button
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => InoltraRichiesta()));
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF00BFFF),
