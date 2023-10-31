@@ -1,0 +1,214 @@
+import 'package:flutter/material.dart';
+
+class InoltraRichiesta extends StatefulWidget {
+  @override
+  _InoltraRichiestaState createState() => _InoltraRichiestaState();
+}
+
+class _InoltraRichiestaState extends State<InoltraRichiesta> {
+  final TextEditingController dataController = TextEditingController();
+  final TextEditingController descrizioneController = TextEditingController();
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: const Color(0xFF00BFFF),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 44.0, left: 15.0),
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      backgroundColor: Colors.white,
+                      child: const Icon(
+                        Icons.arrow_back_ios_new,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const Center(
+                    child: Icon(
+                      Icons.send,
+                      size: 150.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const Center(
+                    child: Text(
+                      "Inoltra Richiesta",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 42.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
+                  Material(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(48),
+                        topRight: Radius.circular(48),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          // Campo Guidatore (TextView)
+                          const Row(
+                            children: [
+                              Text(
+                                "Guidatore: ",
+                                style: TextStyle(
+                                  color: Color(0xFF00BFFF),
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              Text(
+                                "Nome del Guidatore", // Sostituisci con il valore desiderato
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5.0),
+
+                          // Campo Veicolo (TextView)
+                          const Row(
+                            children: [
+                              Text(
+                                "Veicolo: ",
+                                style: TextStyle(
+                                  color: Color(0xFF00BFFF),
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              Text(
+                                "Nome del Veicolo", // Sostituisci con il valore desiderato
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5.0),
+
+                          // Campo Destinazione (TextView)
+                          const Row(
+                            children: [
+                              Text(
+                                "Destinazione: ",
+                                style: TextStyle(
+                                  color: Color(0xFF00BFFF),
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              Text(
+                                "Nome della Destinazione", // Sostituisci con il valore desiderato
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5.0),
+
+                          // Campo Data
+                          Container(
+                            height: 50.0,
+                            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              color: const Color(0x1A00bfff),
+                            ),
+                            child: TextFormField(
+                              controller: dataController,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                labelText: "Data",
+                                prefixIcon: Icon(
+                                  Icons.date_range,
+                                  color: Color(0xFF00BFFF),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 15.0),
+
+                          // Campo Descrizione
+                          Container(
+                            height: 100.0,
+                            margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              color: const Color(0x1A00bfff),
+                            ),
+                            child: TextFormField(
+                              controller: descrizioneController,
+                              maxLines: 5,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                labelText: "Descrizione",
+                                prefixIcon: Icon(
+                                  Icons.text_snippet,
+                                  color: Color(0xFF00BFFF),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 15.0),
+
+                          // Bottone di invio della richiesta
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // Implementa qui la funzionalità di inoltro della richiesta
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF00BFFF),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                minimumSize: const Size(
+                                  double.infinity,
+                                  50.0,
+                                ),
+                              ),
+                              child: const Text(
+                                "Inoltra Richiesta",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 16.0),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
