@@ -136,8 +136,8 @@ class _ModificaEmailState extends State<ModificaEmail> {
                                   String newMail = emailController.text;
                                   String password = passwordController.text;
 
-                                  await userviewmodel.modifyMailWithReauthentication(
-                                    currentEmail, newMail, password, (bool success, String message) {
+                                  userviewmodel.modifyMailWithReauthentication(
+                                    currentEmail, newMail, password, (bool success, String? message) {
                                     if (success) {
                                       // Email aggiornata con successo
                                       Fluttertoast.showToast(
@@ -148,7 +148,7 @@ class _ModificaEmailState extends State<ModificaEmail> {
                                     } else {
                                       // Mostra messaggio di errore
                                       Fluttertoast.showToast(
-                                        msg: message,
+                                        msg: message ?? "",
                                         toastLength: Toast.LENGTH_SHORT,
                                       );
                                     }
@@ -180,8 +180,7 @@ class _ModificaEmailState extends State<ModificaEmail> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            )
-
+                            ),
 
                           ),
                           const SizedBox(height: 16.0),
