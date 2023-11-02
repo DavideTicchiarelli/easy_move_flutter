@@ -122,7 +122,7 @@ class _ListaVeicoliState extends State<ListaVeicoli> {
                           const SizedBox(height: 2.5),
                           createTextField("Capienza:", veicolo.capienza),
                           const SizedBox(height: 2.5),
-                          createTextField("Locazione:", ""),
+                          createTextField("Locazione:", veicolo.locazione),
                           const SizedBox(height: 2.5),
                           createTextField(
                               "Prezzo:", "${veicolo.tariffakm} €/Km"),

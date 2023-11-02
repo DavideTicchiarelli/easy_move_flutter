@@ -11,6 +11,7 @@ class VeicoloViewModel {
     String guidatoreId,
     String modello,
     String targa,
+    String locazione,
     String altezza,
     String lunghezza,
     String larghezza,
@@ -25,7 +26,7 @@ class VeicoloViewModel {
           altezza.isEmpty ||
           lunghezza.isEmpty ||
           larghezza.isEmpty ||
-          tariffakm.isEmpty) {
+          tariffakm.isEmpty || locazione.isEmpty) {
         return "Tutti i campi devono essere compilati";
       }
 
@@ -57,6 +58,7 @@ class VeicoloViewModel {
         guidatoreId,
         modello,
         targa,
+        locazione,
         calcoloCapienza(lunghezza, altezza, larghezza),
         tariffakm,
         imageFile,

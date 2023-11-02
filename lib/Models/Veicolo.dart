@@ -2,6 +2,7 @@ class Veicolo {
   final String idGuidatore;
   String modello;
   final String targa;
+  String locazione;
   final String capienza;
   String tariffakm;
   final String imageUrl;
@@ -10,6 +11,7 @@ class Veicolo {
     required this.idGuidatore,
     required this.modello,
     required this.targa,
+    required this.locazione,
     required this.capienza,
     required this.tariffakm,
     required this.imageUrl,
@@ -20,6 +22,7 @@ class Veicolo {
       : idGuidatore = "",
         modello = "",
         targa = "",
+        locazione="",
         capienza = "",
         tariffakm = "",
         imageUrl = "";
@@ -29,6 +32,7 @@ class Veicolo {
       'idGuidatore': idGuidatore,
       'modello': modello,
       'targa': targa,
+      'locazione': locazione,
       'capienza': capienza,
       'tariffakm': tariffakm,
       'imageUrl': imageUrl,

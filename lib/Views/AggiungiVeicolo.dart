@@ -210,6 +210,7 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                                   userId,
                                   modello,
                                   targa,
+                                  locazione,
                                   altezza,
                                   lunghezza,
                                   larghezza,
