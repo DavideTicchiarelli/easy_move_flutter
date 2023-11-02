@@ -135,7 +135,7 @@ class _ListaVeicoliState extends State<ListaVeicoli> {
                                       5), // Aggiungi il margine di 5dp qui
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => InoltraRichiesta()));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => InoltraRichiesta(veicolo: veicolo)));
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF00BFFF),

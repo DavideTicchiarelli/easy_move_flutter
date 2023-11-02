@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
+import '../Models/Veicolo.dart';
+
+
 class InoltraRichiesta extends StatefulWidget {
+  final Veicolo veicolo;
+
+  InoltraRichiesta({required this.veicolo});
+
   @override
   _InoltraRichiestaState createState() => _InoltraRichiestaState();
 }
 
 class _InoltraRichiestaState extends State<InoltraRichiesta> {
+
   final TextEditingController dataController = TextEditingController();
   final TextEditingController descrizioneController = TextEditingController();
 
@@ -85,7 +93,7 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                           const SizedBox(height: 5.0),
 
                           // Campo Veicolo (TextView)
-                          const Row(
+                           Row(
                             children: [
                               Text(
                                 "Veicolo: ",
@@ -95,7 +103,7 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                                 ),
                               ),
                               Text(
-                                "Nome del Veicolo", // Sostituisci con il valore desiderato
+                                widget.veicolo.modello, // Sostituisci con il valore desiderato
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18.0,
@@ -106,7 +114,7 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                           const SizedBox(height: 5.0),
 
                           // Campo Destinazione (TextView)
-                          const Row(
+                           Row(
                             children: [
                               Text(
                                 "Destinazione: ",

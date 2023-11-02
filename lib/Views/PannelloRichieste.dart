@@ -72,10 +72,10 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                   labelColor: Colors
                       .black, // Imposta il colore del testo delle schede attive
                   tabs: [
-                    Tab(text: 'Tab 1'),
-                    Tab(text: 'Tab 2'),
-                    Tab(text: 'Tab 3'),
-                    Tab(text: 'Tab 4'),
+                    Tab(text: 'IN ATTESA'),
+                    Tab(text: 'ACCETTATE'),
+                    Tab(text: 'COMPLETATE'),
+                    Tab(text: 'RIFIUTATE'),
                   ],
                 ),
                 SizedBox(
@@ -85,11 +85,11 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                       // Contenuto del Tab 1
                       Center(child: Text('Contenuto Tab 1')),
                       // Contenuto del Tab 2
-                      Center(child: Text('Contenuto Tab 2')),
+                      Center(child: Text('CONTENUTO ACCETTATE')),
                       // Contenuto del Tab 3
-                      Center(child: Text('Contenuto Tab 3')),
+                      Center(child: Text('CONTENUTO COMPLETATE')),
                       // Contenuto del Tab 4
-                      Center(child: Text('Contenuto Tab 4')),
+                      Center(child: Text('CONTENUTO RIFIUTATE')),
                     ],
                   ),
                 ),

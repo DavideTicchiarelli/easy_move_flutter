@@ -115,7 +115,7 @@ class _ModificaEmailState extends State<ModificaEmail> {
                               obscureText: true, // Imposta obscureText a true per nascondere la password
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
-                                labelText: "Email",
+                                labelText: "Password",
                                 prefixIcon: Icon(
                                   Icons.lock,
                                   color: Color(0xFF00BFFF), // Imposta il colore rosso dell'icona
