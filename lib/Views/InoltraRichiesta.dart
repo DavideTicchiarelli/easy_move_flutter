@@ -82,12 +82,32 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                                   fontSize: 18.0,
                                 ),
                               ),
-                              Text(
-                                userViewModel.getUserNameById(widget.veicolo.idGuidatore) as String, // Sostituisci con il valore desiderato
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18.0,
-                                ),
+
+                              FutureBuilder<String?>(
+                                future: userViewModel.getUserNameById(widget.veicolo.idGuidatore),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.done) {
+                                    if (snapshot.hasData) {
+                                      return Text(
+                                        snapshot.data!,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18.0,
+                                        ),
+                                      );
+                                    } else {
+                                      return Text(
+                                        "Nessun nome trovato",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18.0,
+                                        ),
+                                      );
+                                    }
+                                  } else {
+                                    return CircularProgressIndicator(); // Puoi utilizzare un altro widget di caricamento qui
+                                  }
+                                },
                               ),
                             ],
                           ),
