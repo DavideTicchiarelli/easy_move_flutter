@@ -29,7 +29,7 @@ class RichiestaViewModel {
             status: "Attesa",
             targa: targa,
           );
-          // Continua con il resto della logica...
+          richiestaRepository.storeRequest(richiesta);
           return "Richiesta Inviata"; // Restituisci una stringa quando la logica è completata con successo
         } else {
           return "Data non valida, scegli una data successiva al giorno corrente";
