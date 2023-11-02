@@ -145,7 +145,7 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                                 ),
                               ),
                               Text(
-                                "Nome della Destinazione", // Sostituisci con il valore desiderato
+                                "Destinazione Non Implementata", // Sostituisci con il valore desiderato
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18.0,
@@ -205,7 +205,7 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                             padding: const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                // Implementa qui la funzionalità di inoltro della richiesta
+
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF00BFFF),
