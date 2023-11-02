@@ -1,7 +1,7 @@
 import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
 import 'package:flutter/material.dart';
-
 import '../Models/Veicolo.dart';
+import '../ViewModels/RichiestaViewModel.dart';
 
 
 class InoltraRichiesta extends StatefulWidget {
@@ -15,6 +15,7 @@ class InoltraRichiesta extends StatefulWidget {
 
 class _InoltraRichiestaState extends State<InoltraRichiesta> {
   final UserViewModel userViewModel = UserViewModel();
+  final RichiestaViewModel richiestaViewModel = RichiestaViewModel();
   final TextEditingController dataController = TextEditingController();
   final TextEditingController descrizioneController = TextEditingController();
 
@@ -205,7 +206,8 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                             padding: const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
                               onPressed: () {
-
+                                richiestaViewModel.inoltraRichiesta("10/10/10", widget.veicolo.idGuidatore,
+                                    descrizioneController.text, widget.veicolo.tariffakm, widget.veicolo.targa);
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF00BFFF),

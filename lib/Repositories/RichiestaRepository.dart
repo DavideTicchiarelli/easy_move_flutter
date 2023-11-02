@@ -19,7 +19,7 @@ class RichiestaRepository {
       await _firestore.collection('richieste').add(richiestaData);
       return "Richiesta memorizzata con successo";
     } catch (error) {
-      return "Richiesta memorizzata con successo";
+      return "Richiesta non memorizzata";
     }
   }
 

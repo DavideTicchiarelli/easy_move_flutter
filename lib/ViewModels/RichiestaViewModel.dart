@@ -1,22 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../Models/Richiesta.dart';
 import '../Repositories/RichiestaRepository.dart';
+import '../Repositories/UserRepository.dart';
 
 class RichiestaViewModel {
-  final RichiestaRepository _richiestaRepository = RichiestaRepository();
 
-  Future<String> inoltraRichiesta(Richiesta richiesta) async {
-    if (richiesta.idconsumer.isNotEmpty &&
-        richiesta.iddriver.isNotEmpty &&
-        richiesta.targa.isNotEmpty &&
-        richiesta.price.isNotEmpty) {
-      if (richiesta.data.isNotEmpty && richiesta.description.isNotEmpty) {
-        if (checkDate(richiesta.data)) {
-          try {
-            final message = await _richiestaRepository.storeRequest(richiesta);
-            return "Richiesta Inviata";
-          } catch (error) {
-            return "Errore durante l'invio della richiesta: ${error.toString()}";
-          }
+  final RichiestaRepository richiestaRepository = RichiestaRepository();
+  final UserRepository userRepository = UserRepository();
+
+  Future<String> inoltraRichiesta(
+      String data,
+      String iddriver,
+      String description,
+      String price,
+      String targa,
+      ) async {
+    var idconsumer = userRepository.getUserId() as String;
+    if (idconsumer.isNotEmpty && iddriver.isNotEmpty && targa.isNotEmpty && price.isNotEmpty) {
+      if (data.isNotEmpty && description.isNotEmpty) {
+        if (checkDate(data)) {
+          final richiesta = Richiesta(
+            idconsumer: idconsumer,
+            data: data,
+            iddriver: iddriver,
+            description: description,
+            price: price,
+            status: "Attesa",
+            targa: targa,
+          );
+          // Continua con il resto della logica...
+          return "Richiesta Inviata"; // Restituisci una stringa quando la logica è completata con successo
         } else {
           return "Data non valida, scegli una data successiva al giorno corrente";
         }
