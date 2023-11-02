@@ -1,7 +1,9 @@
 import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../Models/Veicolo.dart';
+
 
 
 class InoltraRichiesta extends StatefulWidget {
@@ -17,8 +19,10 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
   final UserViewModel userViewModel = UserViewModel();
   final TextEditingController dataController = TextEditingController();
   final TextEditingController descrizioneController = TextEditingController();
+  DateTime? selectedDate;
 
   Widget build(BuildContext context) {
+    DateFormat dateFormat = DateFormat('dd-MM-yyyy');
     return Scaffold(
       body: Container(
         color: const Color(0xFF00BFFF),
@@ -73,85 +77,94 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                       child: Column(
                         children: [
                           // Campo Guidatore (TextView)
-                           Row(
-                            children: [
-                              Text(
-                                "Guidatore: ",
-                                style: TextStyle(
-                                  color: Color(0xFF00BFFF),
-                                  fontSize: 18.0,
+                          // Campo Guidatore (TextView)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20.0), // Aggiungi il margine a sinistra qui
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Guidatore: ",
+                                  style: TextStyle(
+                                    color: Color(0xFF00BFFF),
+                                    fontSize: 18.0,
+                                  ),
                                 ),
-                              ),
-
-                              FutureBuilder<String?>(
-                                future: userViewModel.getUserNameById(widget.veicolo.idGuidatore),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState == ConnectionState.done) {
-                                    if (snapshot.hasData) {
-                                      return Text(
-                                        snapshot.data!,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18.0,
-                                        ),
-                                      );
+                                FutureBuilder<String?>(
+                                  future: userViewModel.getUserNameById(widget.veicolo.idGuidatore),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState == ConnectionState.done) {
+                                      if (snapshot.hasData) {
+                                        return Text(
+                                          snapshot.data!,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18.0,
+                                          ),
+                                        );
+                                      } else {
+                                        return Text(
+                                          "Nessun nome trovato",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18.0,
+                                          ),
+                                        );
+                                      }
                                     } else {
-                                      return Text(
-                                        "Nessun nome trovato",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18.0,
-                                        ),
-                                      );
+                                      return CircularProgressIndicator(); // Puoi utilizzare un altro widget di caricamento qui
                                     }
-                                  } else {
-                                    return CircularProgressIndicator(); // Puoi utilizzare un altro widget di caricamento qui
-                                  }
-                                },
-                              ),
-                            ],
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(height: 5.0),
 
-                          // Campo Veicolo (TextView)
-                           Row(
-                            children: [
-                              Text(
-                                "Veicolo: ",
-                                style: TextStyle(
-                                  color: Color(0xFF00BFFF),
-                                  fontSize: 18.0,
+// Campo Veicolo (TextView)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20.0), // Aggiungi il margine a sinistra qui
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Veicolo: ",
+                                  style: TextStyle(
+                                    color: Color(0xFF00BFFF),
+                                    fontSize: 18.0,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                widget.veicolo.modello, // Sostituisci con il valore desiderato
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18.0,
+                                Text(
+                                  widget.veicolo.modello, // Sostituisci con il valore desiderato
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18.0,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           const SizedBox(height: 5.0),
 
                           // Campo Destinazione (TextView)
-                           Row(
-                            children: [
-                              Text(
-                                "Destinazione: ",
-                                style: TextStyle(
-                                  color: Color(0xFF00BFFF),
-                                  fontSize: 18.0,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20.0), // Aggiungi il margine a sinistra qui
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Destinazione: ",
+                                  style: TextStyle(
+                                    color: Color(0xFF00BFFF),
+                                    fontSize: 18.0,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "Destinazione Non Implementata", // Sostituisci con il valore desiderato
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18.0,
+                                Text(
+                                  "Destinazione Non Implementata", // Sostituisci con il valore desiderato
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18.0,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           const SizedBox(height: 5.0),
 
@@ -163,19 +176,40 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                               borderRadius: BorderRadius.circular(15.0),
                               color: const Color(0x1A00bfff),
                             ),
-                            child: TextFormField(
-                              controller: dataController,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "Data",
-                                prefixIcon: Icon(
-                                  Icons.date_range,
-                                  color: Color(0xFF00BFFF),
+                            child: GestureDetector(
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(DateTime.now().year),
+                                  lastDate: DateTime(DateTime.now().year + 5),
+                                );
+
+                                if (pickedDate != null) {
+                                  setState(() {
+                                    selectedDate = pickedDate;
+                                    dataController.text = DateFormat('dd-MM-yyyy').format(selectedDate!);
+                                  });
+                                }
+                              },
+                              child: AbsorbPointer(
+                                absorbing: true, // Imposta a true per disabilitare l'interazione
+                                child: TextFormField(
+                                  controller: dataController,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    labelText: "Data",
+                                    prefixIcon: Icon(
+                                      Icons.date_range,
+                                      color: Color(0xFF00BFFF),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                           const SizedBox(height: 15.0),
+
 
                           // Campo Descrizione
                           Container(
