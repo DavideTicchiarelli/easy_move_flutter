@@ -16,7 +16,7 @@ class RichiestaViewModel {
       String price,
       String targa,
       ) async {
-    var idconsumer = userRepository.getUserId() as String;
+    var idconsumer = userRepository.getuserId();
     if (idconsumer.isNotEmpty && iddriver.isNotEmpty && targa.isNotEmpty && price.isNotEmpty) {
       if (data.isNotEmpty && description.isNotEmpty) {
         if (checkDate(data)) {
@@ -29,8 +29,8 @@ class RichiestaViewModel {
             status: "Attesa",
             targa: targa,
           );
-          richiestaRepository.storeRequest(richiesta);
-          return "Richiesta Inviata"; // Restituisci una stringa quando la logica è completata con successo
+          var message = richiestaRepository.storeRequest(richiesta);
+          return message;// Restituisci una stringa quando la logica è completata con successo
         } else {
           return "Data non valida, scegli una data successiva al giorno corrente";
         }

@@ -6,17 +6,10 @@ class RichiestaRepository {
 
   Future<String> storeRequest(Richiesta richiesta) async {
     try {
-      final richiestaData = {
-        'idconsumer': richiesta.idconsumer,
-        'data': richiesta.data,
-        'iddriver': richiesta.iddriver,
-        'description': richiesta.description,
-        'price': richiesta.price,
-        'status': richiesta.status,
-        'targa': richiesta.targa,
-      };
-
-      await _firestore.collection('richieste').add(richiestaData);
+      await _firestore
+          .collection('richieste')
+          .add(richiesta.toMap());
+     // await _firestore.collection('richieste').add(richiestaData);
       return "Richiesta memorizzata con successo";
     } catch (error) {
       return "Richiesta non memorizzata";

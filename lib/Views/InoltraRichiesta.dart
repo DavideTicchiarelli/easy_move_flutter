@@ -1,5 +1,6 @@
 import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 import '../Models/Veicolo.dart';
@@ -24,7 +25,7 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
   DateTime? selectedDate;
 
   Widget build(BuildContext context) {
-    DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+    DateFormat dateFormat = DateFormat('dd/MM/yyyy');
     return Scaffold(
       body: Container(
         color: const Color(0xFF00BFFF),
@@ -190,7 +191,7 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                                 if (pickedDate != null) {
                                   setState(() {
                                     selectedDate = pickedDate;
-                                    dataController.text = DateFormat('dd-MM-yyyy').format(selectedDate!);
+                                    dataController.text = DateFormat('dd/MM/yyyy').format(selectedDate!);
                                   });
                                 }
                               },
@@ -240,9 +241,19 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
-                              onPressed: () {
-                                richiestaViewModel.inoltraRichiesta("10/10/10", widget.veicolo.idGuidatore,
+                              onPressed: () async {
+                                var message = await richiestaViewModel.inoltraRichiesta(dataController.text, widget.veicolo.idGuidatore,
                                     descrizioneController.text, widget.veicolo.tariffakm, widget.veicolo.targa);
+
+                                Fluttertoast.showToast(
+                                  msg: message,
+                                  toastLength:
+                                  Toast.LENGTH_SHORT, // Durata del toast
+                                  gravity: ToastGravity
+                                      .BOTTOM, // Posizione del toast sulla schermata
+                                  backgroundColor: Colors.grey,
+                                  textColor: Colors.white,
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF00BFFF),
