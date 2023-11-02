@@ -27,6 +27,19 @@ class User {
       'userType': userType,
       'imageUrl': imageUrl,
     };
+
+
+  }
+
+  factory User.fromMap(Map<String, dynamic> data) {
+    return User.fromData(
+      data['id'] ?? '',
+      data['name'] ?? '',
+      data['surname'] ?? '',
+      data['email'] ?? '',
+      data['userType'] ?? '',
+      data['imageUrl'] ?? '',
+    );
   }
 
 }

@@ -1,3 +1,4 @@
+import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
 import 'package:flutter/material.dart';
 
 import '../Models/Veicolo.dart';
@@ -13,7 +14,7 @@ class InoltraRichiesta extends StatefulWidget {
 }
 
 class _InoltraRichiestaState extends State<InoltraRichiesta> {
-
+  final UserViewModel userViewModel = UserViewModel();
   final TextEditingController dataController = TextEditingController();
   final TextEditingController descrizioneController = TextEditingController();
 
@@ -72,7 +73,7 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                       child: Column(
                         children: [
                           // Campo Guidatore (TextView)
-                          const Row(
+                           Row(
                             children: [
                               Text(
                                 "Guidatore: ",
@@ -82,7 +83,7 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                                 ),
                               ),
                               Text(
-                                "Nome del Guidatore", // Sostituisci con il valore desiderato
+                                userViewModel.getUserNameById(widget.veicolo.idGuidatore) as String, // Sostituisci con il valore desiderato
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18.0,

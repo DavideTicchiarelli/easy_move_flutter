@@ -41,6 +41,28 @@ class UserRepository {
     return message;
   }
 
+  Future<myUser.User?> getUserById(String userId) async {
+    // Riferimento alla collezione "users" nel Firestore
+    CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+
+    try {
+      // Cerca il documento con l'ID specifico
+      DocumentSnapshot userSnapshot = await usersCollection.doc(userId).get();
+
+      // Controlla se il documento esiste
+      if (userSnapshot.exists) {
+        // Converte i dati del documento in un oggetto User (sostituire con il tuo modello)
+        myUser.User user = myUser.User.fromMap(userSnapshot.data() as Map<String, dynamic>);
+        return user;
+      } else {
+        // L'utente con l'ID specifico non è stato trovato
+        return null;
+      }
+    } catch (error) {
+      print("Errore durante la ricerca dell'utente: $error");
+      return null;
+    }
+  }
 
   // Metodo per l'autenticazione di un Utente
   Future<String?> login(String email, String password) async {
