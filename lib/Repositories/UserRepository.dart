@@ -163,17 +163,14 @@ class UserRepository {
     }
   }
 
-  String getuserId() {
-    // Ottieni l'ID dell'utente corrente
+  Future<String> getUserId() async {
     final user = FirebaseAuth.instance.currentUser;
-
-    // Se l'utente è autenticato, restituisci l'ID
     if (user != null) {
-      return user.uid;
+      return user.uid; // Restituisci l'ID dell'utente corrente
     } else {
-      // Se l'utente non è autenticato, restituisci una stringa vuota
-      return "";
+      throw "Utente non autenticato"; // Gestisci il caso in cui l'utente non sia autenticato
     }
   }
+
 
 }

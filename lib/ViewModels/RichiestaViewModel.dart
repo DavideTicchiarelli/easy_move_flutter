@@ -16,7 +16,7 @@ class RichiestaViewModel {
       String price,
       String targa,
       ) async {
-    var idconsumer = userRepository.getuserId();
+    var idconsumer = await userRepository.getUserId();
     if (idconsumer.isNotEmpty && iddriver.isNotEmpty && targa.isNotEmpty && price.isNotEmpty) {
       if (data.isNotEmpty && description.isNotEmpty) {
         if (checkDate(data)) {
