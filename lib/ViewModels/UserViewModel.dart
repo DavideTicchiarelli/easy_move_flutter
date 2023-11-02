@@ -47,7 +47,7 @@ class UserViewModel extends ChangeNotifier {
   Future<String?> getUserNameById(String userId) async {
     final user = await userRepository.getUserById(userId);
     if (user != null) {
-      return user.name;
+      return user.name+ " "+ user.surname;
     } else {
       return null;
     }
