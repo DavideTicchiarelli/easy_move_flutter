@@ -112,50 +112,42 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                  children: [
                    // Contenuto del Tab 1
                    isLoading ? Center(child: CircularProgressIndicator()) : listaRichieste.isEmpty ? Center(child: Text('Nessuna richiesta trovata.'))
-                       : ListView.separated(
-                        itemCount: listaRichieste.length,
-                          separatorBuilder: (context, index) => Divider(height: 1, color: Colors.white), // Spazio tra le richieste
-                          itemBuilder: (context, index) {
-                        final richiesta = listaRichieste[index];
+                       : ListView.builder(
+    itemCount: listaRichieste.length,
+    itemBuilder: (context, index) {
+    Richiesta richiesta = listaRichieste[index];
 
-                       // Qui puoi creare una card personalizzata per ogni richiesta
-                       // Ad esempio, utilizzando ListTile per mostrare le informazioni della richiesta
-                        return Card(
-                         child: Column(
-                           children: [
-                             ListTile(
-                               title: Text("Data: ${richiesta.data}"),
-                             ),
-                             ListTile(
-                               title: Text("Descrizione: ${richiesta.description}"),
-                               subtitle: Text("Prezzo: ${richiesta.price}"),
-                             ),
-                             ListTile(
-                               title: Text("Stato: ${richiesta.status}"),
-                               subtitle: Text("Targa: ${richiesta.targa}"),
-                             ),
-                             ElevatedButton(
-                               onPressed: () {
-                                 // Aggiungi l'azione desiderata al pulsante
-                               },
-                               style: ElevatedButton.styleFrom(
-                                 backgroundColor: const Color(0xFF00BFFF), // Colore di sfondo
-                                 shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(20.0), // Bordo arrotondato
-                                 ),
-                                 minimumSize: const Size(
-                                   double.infinity,
-                                   50.0,
-                                 ),
-                               ),
-                               child: Text("ACCETTA RICHIESTA", style: TextStyle(color: Colors.white)),
-                             ),
-                           ],
-                         ),
-                       );
-                     },
-                   ),
-                   // Contenuto del Tab 2
+    return Card(
+    child: Column(
+    children: [
+    createTextWidget("Data:", richiesta.data),
+      createTextWidget("Descrizione:", richiesta.description),
+      createTextWidget("Prezzo:", richiesta.price),
+    createTextWidget("Stato:", richiesta.status),
+    createTextWidget("Targa:", richiesta.targa),
+    ElevatedButton(
+    onPressed: () {
+    // Aggiungi l'azione desiderata al pulsante
+    },
+    style: ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF00BFFF), // Colore di sfondo
+    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20.0), // Bordo arrotondato
+    ),
+    minimumSize: const Size(
+    double.infinity,
+    50.0,
+    ),
+    ),
+    child: Text("ACCETTA RICHIESTA", style: TextStyle(color: Colors.white)),
+    ),
+    ],
+    ),
+    );
+    },
+    ),
+
+    // Contenuto del Tab 2
                    Center(child: Text('CONTENUTO ACCETTATE NON IMPLEMENTATO')),
                    // Contenuto del Tab 3
                    Center(child: Text('CONTENUTO COMPLETATE NON IMPLEMENTATO')),
