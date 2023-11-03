@@ -72,4 +72,9 @@ class RichiestaViewModel {
       throw "Errore durante il recupero delle richieste correnti: $error";
     }
   }
+
+  List<Richiesta> filterRichiesteByStato(List<Richiesta> richieste, String status) {
+    return richieste.where((richiesta) => richiesta.status == status).toList();
+  }
+
 }

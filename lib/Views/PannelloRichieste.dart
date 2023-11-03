@@ -8,14 +8,14 @@ class PannelloRichieste extends StatefulWidget {
 
   @override
   _PannelloRichiesteState createState() => _PannelloRichiesteState();
-
 }
+
+bool isLoading = true;
 
 
 class _PannelloRichiesteState extends State<PannelloRichieste> {
   RichiestaViewModel richiestaViewModel = RichiestaViewModel();
   List<Richiesta> listaRichieste = [];
-  bool isLoading = true;
 
   Future<void> loadRequest() async {
     final richieste = await richiestaViewModel.getRichiesteCorrenti();
@@ -39,6 +39,7 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         backgroundColor: const Color(0xFF00BFFF),
         shape: const RoundedRectangleBorder(
@@ -92,11 +93,11 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
           ),
 
           // TabBarView con 4 elementi
-           DefaultTabController(
+          DefaultTabController(
             length: 4, // Numero di schede
             child: Column(
               children: [
-                TabBar(
+                const TabBar(
                   labelColor: Colors
                       .black, // Imposta il colore del testo delle schede attive
                   tabs: [
@@ -106,56 +107,45 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                     Tab(text: 'RIFIUTATE'),
                   ],
                 ),
-             SizedBox(
-               height: 200, // Altezza del TabBarView
-               child: TabBarView(
-                 children: [
-                   // Contenuto del Tab 1
-                   isLoading ? Center(child: CircularProgressIndicator()) : listaRichieste.isEmpty ? Center(child: Text('Nessuna richiesta trovata.'))
-                       : ListView.builder(
-    itemCount: listaRichieste.length,
-    itemBuilder: (context, index) {
-    Richiesta richiesta = listaRichieste[index];
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.365,
+                  child: TabBarView(
+                    children: [
+                      // Contenuto del Tab 1
+                      isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : listaRichieste.isEmpty
+                          ? const Center(
+                          child: Text('Nessuna richiesta trovata.'))
+                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Attesa")),
 
-    return Card(
-    child: Column(
-    children: [
-    createTextWidget("Data:", richiesta.data),
-      createTextWidget("Descrizione:", richiesta.description),
-      createTextWidget("Prezzo:", richiesta.price),
-    createTextWidget("Stato:", richiesta.status),
-    createTextWidget("Targa:", richiesta.targa),
-    ElevatedButton(
-    onPressed: () {
-    // Aggiungi l'azione desiderata al pulsante
-    },
-    style: ElevatedButton.styleFrom(
-    backgroundColor: const Color(0xFF00BFFF), // Colore di sfondo
-    shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(20.0), // Bordo arrotondato
-    ),
-    minimumSize: const Size(
-    double.infinity,
-    50.0,
-    ),
-    ),
-    child: Text("ACCETTA RICHIESTA", style: TextStyle(color: Colors.white)),
-    ),
-    ],
-    ),
-    );
-    },
-    ),
+                      // Contenuto del Tab 2
+                      isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : listaRichieste.isEmpty
+                          ? const Center(
+                          child: Text('Nessuna richiesta trovata.'))
+                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Accettata")),
 
-    // Contenuto del Tab 2
-                   Center(child: Text('CONTENUTO ACCETTATE NON IMPLEMENTATO')),
-                   // Contenuto del Tab 3
-                   Center(child: Text('CONTENUTO COMPLETATE NON IMPLEMENTATO')),
-                   // Contenuto del Tab 4
-                   Center(child: Text('CONTENUTO RIFIUTATE NON IMPLEMENTATO')),
-                 ],
-               ),
-             ),
+                      // Contenuto del Tab 3
+                      isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : listaRichieste.isEmpty
+                          ? const Center(
+                          child: Text('Nessuna richiesta trovata.'))
+                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Completata")),
+
+                      // Contenuto del Tab 4
+                      isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : listaRichieste.isEmpty
+                          ? const Center(
+                          child: Text('Nessuna richiesta trovata.'))
+                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Rifiutata")),
+                    ],
+
+                  )
+                ),
               ],
             ),
           ),
@@ -189,3 +179,46 @@ Widget createTextWidget(String label, String value) {
     ),
   );
 }
+
+Widget buildRichiestaList(List<Richiesta> listaRichieste) {
+  return isLoading
+      ? Center(child: CircularProgressIndicator())
+      : listaRichieste.isEmpty
+      ? Center(child: Text('Nessuna richiesta trovata.'))
+      : ListView.builder(
+    itemCount: listaRichieste.length,
+    itemBuilder: (context, index) {
+      Richiesta richiesta = listaRichieste[index];
+
+      return Card(
+        child: Column(
+          children: [
+            createTextWidget("Data:", richiesta.data),
+            createTextWidget("Descrizione:", richiesta.description),
+            createTextWidget("Prezzo:", richiesta.price),
+            createTextWidget("Stato:", richiesta.status),
+            createTextWidget("Targa:", richiesta.targa),
+            ElevatedButton(
+              onPressed: () {
+                // Aggiungi l'azione desiderata al pulsante
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF00BFFF), // Colore di sfondo
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0), // Bordo arrotondato
+                ),
+                minimumSize: const Size(
+                  double.infinity,
+                  50.0,
+                ),
+              ),
+              child: const Text("ACCETTA RICHIESTA",
+                  style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
