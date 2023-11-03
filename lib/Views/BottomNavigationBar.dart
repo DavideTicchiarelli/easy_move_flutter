@@ -22,45 +22,62 @@ class BottomNavigationBarApp extends StatefulWidget {
 
 class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
   int _currentIndex = 0;
+  bool showAggiungiIcon = false;
 
-  // Lista delle pagine da mostrare nella bottom bar
   final List<Widget> _pages = [
-    const Home(),
+    Home(),
     const AggiungiVeicolo(),
     const PannelloRichieste(),
     const Profilo(),
   ];
 
   @override
+  void initState() {
+    super.initState();
+    userViewModel.verifyRole("guidatore").then((bool result) {
+      setState(() {
+        showAggiungiIcon = result;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed, // Per supportare più di 3 elementi
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Aggiungi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.send),
-            label: 'Richieste',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profilo',
-          ),
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+    return WillPopScope(
+      onWillPop: () async {
+        // Impedisci la pressione del pulsante "Back" restituendo false.
+        return false;
+      },
+      child: Scaffold(
+        body: _pages[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          type: BottomNavigationBarType.fixed,
+          items: [
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            if (showAggiungiIcon)
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.add),
+                label: 'Aggiungi',
+              ),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.send),
+              label: 'Richieste',
+            ),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profilo',
+            ),
+          ],
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }

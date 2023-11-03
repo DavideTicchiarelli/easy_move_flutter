@@ -2,15 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'ListaVeicoli.dart';
+import 'Profilo.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: Home(),
-  ));
+class Home extends StatefulWidget {
+  Home({Key? key});
+
+  @override
+  _HomeState createState() => _HomeState();
 }
 
-class Home extends StatelessWidget {
-  const Home({Key? key});
+class _HomeState extends State<Home> {
+  bool mostraPulsante = false; // Inizializza con un valore predefinito
+
+  @override
+  void initState() {
+    super.initState();
+    // Esegui la logica per controllare il ruolo dell'utente corrente
+    userViewModel.verifyRole("consumatore").then((bool result) {
+      setState(() {
+        mostraPulsante = result;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +75,8 @@ class Home extends StatelessWidget {
               ),
             ),
           ),
-          Container(
+          if (mostraPulsante)
+            Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             margin: const EdgeInsets.only(bottom: 5.0),

@@ -44,6 +44,7 @@ class UserViewModel extends ChangeNotifier {
   }
 
 
+
   Future<String?> getUserNameById(String userId) async {
     final user = await userRepository.getUserById(userId);
     if (user != null) {
@@ -54,7 +55,7 @@ class UserViewModel extends ChangeNotifier {
   }
 
 
-
+ // Metodo per effettuare il logout dell'utente corrente
   Future<String> logout() async {
     try {
       await userRepository.logout();
@@ -66,9 +67,26 @@ class UserViewModel extends ChangeNotifier {
     }
   }
 
+  //Metodo per ottenere l'utente corrente
   Future<myUser.User?> getCurrentUser() async {
     return userRepository.getCurrentUser();
   }
+
+  // Metodo per controllare il ruolo di un utente
+  Future<bool> verifyRole(String targetRole) async {
+    final user = await getCurrentUser(); // Utilizza la funzione che hai già implementato per ottenere l'utente corrente
+
+    if (user != null) {
+      final userRole = user.userType; // Sostituisci 'role' con il nome del campo del ruolo nel tuo modello User
+
+      if (userRole != null && userRole.isNotEmpty) {
+        return userRole == targetRole; // Restituisci true se il ruolo corrisponde al targetRole specificato, altrimenti false
+      }
+    }
+    return false; // Restituzione predefinita se l'utente non ha un ruolo o se l'utente non è autenticato
+  }
+
+
 
   void sendPasswordResetEmail(
       String email,
