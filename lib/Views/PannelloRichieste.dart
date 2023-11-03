@@ -1,5 +1,8 @@
+import 'package:easy_move_flutter/Models/User.dart';
 import 'package:easy_move_flutter/ViewModels/RichiestaViewModel.dart';
+import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../Models/Richiesta.dart';
 
@@ -15,7 +18,9 @@ bool isLoading = true;
 
 class _PannelloRichiesteState extends State<PannelloRichieste> {
   RichiestaViewModel richiestaViewModel = RichiestaViewModel();
+  UserViewModel userViewModel = UserViewModel();
   List<Richiesta> listaRichieste = [];
+  User? currentUser;
 
   Future<void> loadRequest() async {
     final richieste = await richiestaViewModel.getRichiesteCorrenti();
@@ -30,10 +35,18 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
     });
   }
 
+  Future<void> getCurrentUser() async {
+    final user = await userViewModel.getCurrentUser();
+    setState(() {
+      currentUser = user;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     loadRequest();
+    getCurrentUser();
   }
 
   @override
@@ -83,10 +96,10 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  createTextWidget('Richieste totali:', '100'),
-                  createTextWidget('Richieste in attesa:', '25'),
-                  createTextWidget('Richieste accettate:', '75'),
-                  createTextWidget('Richieste completate:', '50'),
+                  createTextWidget('Richieste totali:', listaRichieste.length.toString()),
+                  createTextWidget('Richieste in attesa:', richiestaViewModel.getFilteredRichiesteCount(listaRichieste, "Attesa")),
+                  createTextWidget('Richieste accettate:', richiestaViewModel.getFilteredRichiesteCount(listaRichieste, "Accettata")),
+                  createTextWidget('Richieste rifiutate:', richiestaViewModel.getFilteredRichiesteCount(listaRichieste, "Rifiutata")),
                 ],
               ),
             ),
@@ -117,7 +130,7 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                           : listaRichieste.isEmpty
                           ? const Center(
                           child: Text('Nessuna richiesta trovata.'))
-                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Attesa")),
+                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Attesa"), richiestaViewModel, loadRequest, currentUser!.userType, "Attesa"),
 
                       // Contenuto del Tab 2
                       isLoading
@@ -125,7 +138,7 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                           : listaRichieste.isEmpty
                           ? const Center(
                           child: Text('Nessuna richiesta trovata.'))
-                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Accettata")),
+                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Accettata"), richiestaViewModel, loadRequest, currentUser!.userType, "Accettata"),
 
                       // Contenuto del Tab 3
                       isLoading
@@ -133,7 +146,7 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                           : listaRichieste.isEmpty
                           ? const Center(
                           child: Text('Nessuna richiesta trovata.'))
-                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Completata")),
+                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Completata"), richiestaViewModel,loadRequest, currentUser!.userType, "Completata"),
 
                       // Contenuto del Tab 4
                       isLoading
@@ -141,7 +154,7 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                           : listaRichieste.isEmpty
                           ? const Center(
                           child: Text('Nessuna richiesta trovata.'))
-                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Rifiutata")),
+                          : buildRichiestaList(richiestaViewModel.filterRichiesteByStato(listaRichieste,"Rifiutata"), richiestaViewModel, loadRequest, currentUser!.userType, "Rifiutata"),
                     ],
 
                   )
@@ -180,7 +193,33 @@ Widget createTextWidget(String label, String value) {
   );
 }
 
-Widget buildRichiestaList(List<Richiesta> listaRichieste) {
+Widget createText(String label, String value) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          '$label ',
+          style: TextStyle(
+            fontSize: 18,
+            color: Color(0xFF00BFFF),
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.black, // Imposta il colore del testo a nero
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
+Widget buildRichiestaList(List<Richiesta> listaRichieste, RichiestaViewModel richiestaViewModel, Function loadRequest, String userType, String Tab) {
   return isLoading
       ? Center(child: CircularProgressIndicator())
       : listaRichieste.isEmpty
@@ -191,34 +230,123 @@ Widget buildRichiestaList(List<Richiesta> listaRichieste) {
       Richiesta richiesta = listaRichieste[index];
 
       return Card(
-        child: Column(
-          children: [
-            createTextWidget("Data:", richiesta.data),
-            createTextWidget("Descrizione:", richiesta.description),
-            createTextWidget("Prezzo:", richiesta.price),
-            createTextWidget("Stato:", richiesta.status),
-            createTextWidget("Targa:", richiesta.targa),
-            ElevatedButton(
-              onPressed: () {
-                // Aggiungi l'azione desiderata al pulsante
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF00BFFF), // Colore di sfondo
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0), // Bordo arrotondato
-                ),
-                minimumSize: const Size(
-                  double.infinity,
-                  50.0,
-                ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              createText("Data:", richiesta.data),
+              createText("Descrizione:", richiesta.description),
+              createText("Prezzo:", richiesta.price),
+              createText("Stato:", richiesta.status),
+              createText("Targa:", richiesta.targa),
+              Row(
+                children: [
+                  if (userType != "consumatore" && Tab != "Completata" && Tab != "Rifiutata" && Tab != "Accettata")
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          var message = await richiestaViewModel.updateRichiestaStatus(richiesta.id, "Accettata");
+                          Fluttertoast.showToast(
+                            msg: message,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: Colors.grey,
+                            textColor: Colors.white,
+                          );
+                          loadRequest();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF00BFFF),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          minimumSize: Size(
+                            double.infinity,
+                            40.0,
+                          ),
+                        ),
+                        child: Text(
+                          "ACCETTA RICHIESTA",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  if(userType != "consumatore" && Tab != "Completata" && Tab != "Rifiutata" && Tab != "Attesa")
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        var message = await richiestaViewModel.updateRichiestaStatus(richiesta.id, "Completata");
+                        Fluttertoast.showToast(
+                          msg: message,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: Colors.grey,
+                          textColor: Colors.white,
+                        );
+                        loadRequest();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF00BFFF),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        minimumSize: Size(
+                          double.infinity,
+                          40.0,
+                        ),
+                      ),
+                      child: Text(
+                        "COMPLETA RICHIESTA",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  if (Tab != "Completata" && Tab != "Rifiutata")
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        var message = await richiestaViewModel.updateRichiestaStatus(richiesta.id, "Rifiutata");
+                        Fluttertoast.showToast(
+                          msg: message,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: Colors.grey,
+                          textColor: Colors.white,
+                        );
+                        loadRequest();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFE61919),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        minimumSize: Size(
+                          double.infinity,
+                          40.0,
+                        ),
+                      ),
+                      child: const Text(
+                        "ANNULLA RICHIESTA",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              child: const Text("ACCETTA RICHIESTA",
-                  style: TextStyle(color: Colors.white)),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     },
   );
 }
+
+
+
+
+
+
+
+
 

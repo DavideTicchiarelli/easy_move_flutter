@@ -6,9 +6,16 @@ class RichiestaRepository {
 
   Future<String> storeRequest(Richiesta richiesta) async {
     try {
-      await _firestore
+      final DocumentReference docRef = await _firestore
           .collection('richieste')
           .add(richiesta.toMap());
+
+      final String documentoId = docRef.id; // Ottieni l'ID del documento
+
+      // Aggiorna il campo "id" del documento con l'ID ottenuto
+      await _firestore.collection('richieste').doc(documentoId).update({'id': documentoId});
+
+
      // await _firestore.collection('richieste').add(richiestaData);
       return "Richiesta memorizzata con successo";
     } catch (error) {
@@ -25,6 +32,17 @@ class RichiestaRepository {
       return richieste;
     } catch (error) {
       throw "Errore durante il recupero delle richieste: $error";
+    }
+  }
+
+  Future<String> updateRichiestaStatus(String richiestaId, String newStatus) async {
+    try {
+      await _firestore.collection('richieste').doc(richiestaId).update({
+        'status': newStatus,
+      });
+      return('Stato della richiesta aggiornato con successo.');
+    } catch (e) {
+      return('Errore durante l\'aggiornamento dello stato della richiesta: $e');
     }
   }
 }

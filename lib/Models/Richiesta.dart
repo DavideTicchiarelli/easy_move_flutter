@@ -6,6 +6,7 @@ class Richiesta {
   final String price;
   final String status;
   final String targa;
+  final String id;
 
   Richiesta({
     required this.idconsumer,
@@ -15,11 +16,13 @@ class Richiesta {
     required this.price,
     required this.status,
     required this.targa,
+    required this.id
+
 
   });
 
   // Costruttore senza nome
-  Richiesta.fromData(this.idconsumer, this.data, this.iddriver, this.description, this.price, this.status ,this.targa);
+  Richiesta.fromData(this.idconsumer, this.data, this.iddriver, this.description, this.price, this.status ,this.targa, this.id);
 
   Map<String, dynamic> toMap() {
     return {
@@ -30,6 +33,7 @@ class Richiesta {
       'price': price,
       'status': status,
       'targa': targa,
+      'id': id,
     };
 
 
@@ -43,7 +47,8 @@ class Richiesta {
       data['description'] ?? '',
       data['price'] ?? '',
       data['status'] ?? '',
-      data['targa'] ?? ''
+      data['targa'] ?? '',
+      data['id'] ?? '',
     );
   }
 

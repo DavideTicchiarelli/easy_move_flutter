@@ -28,6 +28,7 @@ class RichiestaViewModel {
             price: price,
             status: "Attesa",
             targa: targa,
+            id: "STANDARD ID",
           );
           var message = richiestaRepository.storeRequest(richiesta);
           return message;// Restituisci una stringa quando la logica è completata con successo
@@ -76,5 +77,14 @@ class RichiestaViewModel {
   List<Richiesta> filterRichiesteByStato(List<Richiesta> richieste, String status) {
     return richieste.where((richiesta) => richiesta.status == status).toList();
   }
+
+  String getFilteredRichiesteCount(List<Richiesta> richieste, String status) {
+    List<Richiesta> filteredRichieste = richieste.where((richiesta) => richiesta.status == status).toList();
+    return filteredRichieste.length.toString();
+  }
+  Future<String> updateRichiestaStatus(String richiestaId, String newStatus){
+    return richiestaRepository.updateRichiestaStatus(richiestaId, newStatus);
+  }
+
 
 }
