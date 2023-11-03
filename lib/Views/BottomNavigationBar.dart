@@ -22,14 +22,28 @@ class BottomNavigationBarApp extends StatefulWidget {
 
 class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
   int _currentIndex = 0;
+  bool showAggiungiIcon = false;
+
 
   // Lista delle pagine da mostrare nella bottom bar
   final List<Widget> _pages = [
-    const Home(),
+    Home(),
     const AggiungiVeicolo(),
     const PannelloRichieste(),
     const Profilo(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    // Esegui la logica per controllare il ruolo dell'utente corrente
+    userViewModel.verifyRole("guidatore").then((bool result) {
+      setState(() {
+        showAggiungiIcon = result;
+      });
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +52,21 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed, // Per supportare più di 3 elementi
-        items: const [
-          BottomNavigationBarItem(
+        items:  [
+          const BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+          if (showAggiungiIcon) // Mostra "Aggiungi" solo se l'utente è un guidatore
+            const BottomNavigationBarItem(
             icon: Icon(Icons.add),
             label: 'Aggiungi',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.send),
             label: 'Richieste',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profilo',
           ),
