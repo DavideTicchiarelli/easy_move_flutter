@@ -99,6 +99,7 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                   createTextWidget('Richieste totali:', listaRichieste.length.toString()),
                   createTextWidget('Richieste in attesa:', richiestaViewModel.getFilteredRichiesteCount(listaRichieste, "Attesa")),
                   createTextWidget('Richieste accettate:', richiestaViewModel.getFilteredRichiesteCount(listaRichieste, "Accettata")),
+                  createTextWidget('Richieste completate:', richiestaViewModel.getFilteredRichiesteCount(listaRichieste, "Completata")),
                   createTextWidget('Richieste rifiutate:', richiestaViewModel.getFilteredRichiesteCount(listaRichieste, "Rifiutata")),
                 ],
               ),
