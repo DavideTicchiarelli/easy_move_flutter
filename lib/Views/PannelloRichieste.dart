@@ -101,8 +101,9 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                             final richieste = snapshot.data;
 
                             // Costruisci le card delle richieste
-                            return ListView.builder(
-                              itemCount: richieste?.length,
+                            return ListView.separated(
+                              itemCount: richieste!.length,
+                              separatorBuilder: (context, index) => Divider(height: 1, color: Colors.white), // Spazio tra le richieste
                               itemBuilder: (context, index) {
                                 final richiesta = richieste?[index];
 
