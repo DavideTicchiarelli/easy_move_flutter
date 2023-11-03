@@ -50,16 +50,24 @@ class RichiestaViewModel {
 
   Future<List<Richiesta>> getRichiesteCorrenti() async {
     try {
-      final userId = await userRepository.getUserId();
+      final user = await userRepository.getCurrentUser();
       final tutteLeRichieste = await richiestaRepository.getAllRichieste();
+      if(user?.userType == "consumatore"){
+        // Filtra le richieste in base all'ID corrente (consumatore o guidatore)
+        final richiesteCorrenti = tutteLeRichieste
+            .where((richiesta) =>
+        richiesta.idconsumer == user?.id)
+            .toList();
 
-      // Filtra le richieste in base all'ID corrente (consumatore o guidatore)
-      final richiesteCorrenti = tutteLeRichieste
-          .where((richiesta) =>
-      richiesta.idconsumer == userId || richiesta.iddriver == userId)
-          .toList();
-
-      return richiesteCorrenti;
+        return richiesteCorrenti;
+      }
+      else{
+        // Filtra le richieste in base all'ID corrente (consumatore o guidatore)
+        final richiesteCorrenti = tutteLeRichieste
+            .where((richiesta) => richiesta.iddriver == user?.id)
+            .toList();
+        return richiesteCorrenti;
+      }
     } catch (error) {
       throw "Errore durante il recupero delle richieste correnti: $error";
     }

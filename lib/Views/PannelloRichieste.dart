@@ -122,6 +122,22 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                                         title: Text("Stato: ${richiesta?.status}"),
                                         subtitle: Text("Targa: ${richiesta?.targa}"),
                                       ),
+                                      ElevatedButton(
+                                        onPressed: () {
+
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color(0xFF00BFFF), // Colore di sfondo
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20.0), // Bordo arrotondato
+                                          ),
+                                          minimumSize: const Size(
+                                            double.infinity,
+                                            50.0,
+                                          ),
+                                        ),
+                                        child: Text("ACCETTA RICHIESTA", style: TextStyle(color: Colors.white)),
+                                      ),
                                     ],
                                   ),
                                 );
