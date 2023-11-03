@@ -43,7 +43,25 @@ class RichiestaViewModel {
   }
 
   bool checkDate(String data) {
-    // Implementa la logica per verificare se la data è successiva al giorno corrente
-    return true; // Sostituisci con la tua logica
+    // Logica per controllare se la data immessa
+    // è precendente alla data corrente non implementata
+    return true;
+  }
+
+  Future<List<Richiesta>> getRichiesteCorrenti() async {
+    try {
+      final userId = await userRepository.getUserId();
+      final tutteLeRichieste = await richiestaRepository.getAllRichieste();
+
+      // Filtra le richieste in base all'ID corrente (consumatore o guidatore)
+      final richiesteCorrenti = tutteLeRichieste
+          .where((richiesta) =>
+      richiesta.idconsumer == userId || richiesta.iddriver == userId)
+          .toList();
+
+      return richiesteCorrenti;
+    } catch (error) {
+      throw "Errore durante il recupero delle richieste correnti: $error";
+    }
   }
 }

@@ -1,13 +1,18 @@
+import 'package:easy_move_flutter/ViewModels/RichiestaViewModel.dart';
 import 'package:flutter/material.dart';
+
+import '../Models/Richiesta.dart';
 
 class PannelloRichieste extends StatefulWidget {
   const PannelloRichieste({super.key});
 
   @override
   _PannelloRichiesteState createState() => _PannelloRichiesteState();
+
 }
 
 class _PannelloRichiesteState extends State<PannelloRichieste> {
+  RichiestaViewModel richiestaViewModel = RichiestaViewModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +69,7 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
           ),
 
           // TabBarView con 4 elementi
-          const DefaultTabController(
+           DefaultTabController(
             length: 4, // Numero di schede
             child: Column(
               children: [
@@ -83,13 +88,54 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                   child: TabBarView(
                     children: [
                       // Contenuto del Tab 1
-                      Center(child: Text('Contenuto Tab 1')),
+                      FutureBuilder<List<Richiesta>>(
+                        future: richiestaViewModel.getRichiesteCorrenti(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator()); // Visualizza un indicatore di caricamento
+                          } else if (snapshot.hasError) {
+                            return Center(child: Text('Errore: ${snapshot.error}'));
+                          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                            return Center(child: Text('Nessuna richiesta trovata.'));
+                          } else {
+                            final richieste = snapshot.data;
+
+                            // Costruisci le card delle richieste
+                            return ListView.builder(
+                              itemCount: richieste?.length,
+                              itemBuilder: (context, index) {
+                                final richiesta = richieste?[index];
+
+                                // Qui puoi creare una card personalizzata per ogni richiesta
+                                // Ad esempio, utilizzando ListTile per mostrare le informazioni della richiesta
+                                return Card(
+                                  child: Column(
+                                    children: [
+                                      ListTile(
+                                        title: Text("Data: ${richiesta?.data}"),
+                                      ),
+                                      ListTile(
+                                        title: Text("Descrizione: ${richiesta?.description}"),
+                                        subtitle: Text("Prezzo: ${richiesta?.price}"),
+                                      ),
+                                      ListTile(
+                                        title: Text("Stato: ${richiesta?.status}"),
+                                        subtitle: Text("Targa: ${richiesta?.targa}"),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        },
+                      ),
                       // Contenuto del Tab 2
-                      Center(child: Text('CONTENUTO ACCETTATE')),
+                      Center(child: Text('CONTENUTO ACCETTATE NON IMPLEMENTATO')),
                       // Contenuto del Tab 3
-                      Center(child: Text('CONTENUTO COMPLETATE')),
+                      Center(child: Text('CONTENUTO COMPLETATE NON IMPLEMENTATO')),
                       // Contenuto del Tab 4
-                      Center(child: Text('CONTENUTO RIFIUTATE')),
+                      Center(child: Text('CONTENUTO RIFIUTATE NON IMPLEMENTATO')),
                     ],
                   ),
                 ),
