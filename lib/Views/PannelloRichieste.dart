@@ -11,8 +11,31 @@ class PannelloRichieste extends StatefulWidget {
 
 }
 
+
 class _PannelloRichiesteState extends State<PannelloRichieste> {
   RichiestaViewModel richiestaViewModel = RichiestaViewModel();
+  List<Richiesta> listaRichieste = [];
+  bool isLoading = true;
+
+  Future<void> loadRequest() async {
+    final richieste = await richiestaViewModel.getRichiesteCorrenti();
+
+    setState(() {
+      listaRichieste = richieste;
+      Future.delayed(const Duration(seconds: 1), () {
+        setState(() {
+          isLoading = false; // Imposta isLoading su false dopo 3 secondi
+        });
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadRequest();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,79 +106,64 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                     Tab(text: 'RIFIUTATE'),
                   ],
                 ),
-                SizedBox(
-                  height: 200, // Altezza del TabBarView
-                  child: TabBarView(
-                    children: [
-                      // Contenuto del Tab 1
-                      FutureBuilder<List<Richiesta>>(
-                        future: richiestaViewModel.getRichiesteCorrenti(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator()); // Visualizza un indicatore di caricamento
-                          } else if (snapshot.hasError) {
-                            return Center(child: Text('Errore: ${snapshot.error}'));
-                          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return Center(child: Text('Nessuna richiesta trovata.'));
-                          } else {
-                            final richieste = snapshot.data;
+             SizedBox(
+               height: 200, // Altezza del TabBarView
+               child: TabBarView(
+                 children: [
+                   // Contenuto del Tab 1
+                   isLoading ? Center(child: CircularProgressIndicator()) : listaRichieste.isEmpty ? Center(child: Text('Nessuna richiesta trovata.'))
+                       : ListView.separated(
+                        itemCount: listaRichieste.length,
+                          separatorBuilder: (context, index) => Divider(height: 1, color: Colors.white), // Spazio tra le richieste
+                          itemBuilder: (context, index) {
+                        final richiesta = listaRichieste[index];
 
-                            // Costruisci le card delle richieste
-                            return ListView.separated(
-                              itemCount: richieste!.length,
-                              separatorBuilder: (context, index) => Divider(height: 1, color: Colors.white), // Spazio tra le richieste
-                              itemBuilder: (context, index) {
-                                final richiesta = richieste?[index];
-
-                                // Qui puoi creare una card personalizzata per ogni richiesta
-                                // Ad esempio, utilizzando ListTile per mostrare le informazioni della richiesta
-                                return Card(
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        title: Text("Data: ${richiesta?.data}"),
-                                      ),
-                                      ListTile(
-                                        title: Text("Descrizione: ${richiesta?.description}"),
-                                        subtitle: Text("Prezzo: ${richiesta?.price}"),
-                                      ),
-                                      ListTile(
-                                        title: Text("Stato: ${richiesta?.status}"),
-                                        subtitle: Text("Targa: ${richiesta?.targa}"),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: const Color(0xFF00BFFF), // Colore di sfondo
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(20.0), // Bordo arrotondato
-                                          ),
-                                          minimumSize: const Size(
-                                            double.infinity,
-                                            50.0,
-                                          ),
-                                        ),
-                                        child: Text("ACCETTA RICHIESTA", style: TextStyle(color: Colors.white)),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          }
-                        },
-                      ),
-                      // Contenuto del Tab 2
-                      Center(child: Text('CONTENUTO ACCETTATE NON IMPLEMENTATO')),
-                      // Contenuto del Tab 3
-                      Center(child: Text('CONTENUTO COMPLETATE NON IMPLEMENTATO')),
-                      // Contenuto del Tab 4
-                      Center(child: Text('CONTENUTO RIFIUTATE NON IMPLEMENTATO')),
-                    ],
-                  ),
-                ),
+                       // Qui puoi creare una card personalizzata per ogni richiesta
+                       // Ad esempio, utilizzando ListTile per mostrare le informazioni della richiesta
+                        return Card(
+                         child: Column(
+                           children: [
+                             ListTile(
+                               title: Text("Data: ${richiesta.data}"),
+                             ),
+                             ListTile(
+                               title: Text("Descrizione: ${richiesta.description}"),
+                               subtitle: Text("Prezzo: ${richiesta.price}"),
+                             ),
+                             ListTile(
+                               title: Text("Stato: ${richiesta.status}"),
+                               subtitle: Text("Targa: ${richiesta.targa}"),
+                             ),
+                             ElevatedButton(
+                               onPressed: () {
+                                 // Aggiungi l'azione desiderata al pulsante
+                               },
+                               style: ElevatedButton.styleFrom(
+                                 backgroundColor: const Color(0xFF00BFFF), // Colore di sfondo
+                                 shape: RoundedRectangleBorder(
+                                   borderRadius: BorderRadius.circular(20.0), // Bordo arrotondato
+                                 ),
+                                 minimumSize: const Size(
+                                   double.infinity,
+                                   50.0,
+                                 ),
+                               ),
+                               child: Text("ACCETTA RICHIESTA", style: TextStyle(color: Colors.white)),
+                             ),
+                           ],
+                         ),
+                       );
+                     },
+                   ),
+                   // Contenuto del Tab 2
+                   Center(child: Text('CONTENUTO ACCETTATE NON IMPLEMENTATO')),
+                   // Contenuto del Tab 3
+                   Center(child: Text('CONTENUTO COMPLETATE NON IMPLEMENTATO')),
+                   // Contenuto del Tab 4
+                   Center(child: Text('CONTENUTO RIFIUTATE NON IMPLEMENTATO')),
+                 ],
+               ),
+             ),
               ],
             ),
           ),
