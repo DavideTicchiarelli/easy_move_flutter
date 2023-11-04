@@ -1,3 +1,4 @@
+import 'package:easy_move_flutter/ViewModels/UserViewModel.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
 import 'AggiungiVeicolo.dart';
@@ -31,6 +32,15 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
     const Profilo(),
   ];
 
+  final List<Widget> _pagesWithoutAggiungi = [
+    Home(),
+    const PannelloRichieste(),
+    const Profilo(),
+  ];
+
+  List<Widget> get _selectedPages => showAggiungiIcon ? _pages : _pagesWithoutAggiungi;
+
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +51,7 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -49,7 +60,7 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
         return false;
       },
       child: Scaffold(
-        body: _pages[_currentIndex],
+        body: _selectedPages[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           type: BottomNavigationBarType.fixed,
