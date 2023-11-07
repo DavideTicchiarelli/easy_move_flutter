@@ -237,7 +237,7 @@ Widget buildRichiestaList(List<Richiesta> listaRichieste, RichiestaViewModel ric
             children: [
               createText("Data:", richiesta.data),
               createText("Descrizione:", richiesta.description),
-              createText("Prezzo:", richiesta.price),
+              createText("Prezzo:", "${richiesta.price} €/km"),
               createText("Stato:", richiesta.status),
               createText("Targa:", richiesta.targa),
               Row(
