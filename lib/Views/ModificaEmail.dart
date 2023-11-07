@@ -129,38 +129,38 @@ class _ModificaEmailState extends State<ModificaEmail> {
                             padding: const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
                               onPressed: () async {
-                                myUser.User? currentUser = await userviewmodel.getCurrentUser();
-
-                                if (currentUser != null) {
-                                  String currentEmail = currentUser.email;
-                                  String newMail = emailController.text;
-                                  String password = passwordController.text;
-
-                                  userviewmodel.modifyMailWithReauthentication(
-                                    currentEmail, newMail, password, (bool success, String? message) {
-                                    if (success) {
-                                      // Email aggiornata con successo
-                                      Fluttertoast.showToast(
-                                        msg: 'Email aggiornata con successo',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                      );
-                                      Navigator.pop(context); // Torna indietro
-                                    } else {
-                                      // Mostra messaggio di errore
-                                      Fluttertoast.showToast(
-                                        msg: message ?? "",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                      );
-                                    }
-                                  },
-                                  );
-                                } else {
-                                  // L'utente non è stato trovato, gestisci di conseguenza
-                                  Fluttertoast.showToast(
-                                    msg: 'Utente non trovato',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                  );
-                                }
+                                // myUser.User? currentUser = await userviewmodel.getCurrentUser();
+                                //
+                                // if (currentUser != null) {
+                                //   String currentEmail = currentUser.email;
+                                //   String newMail = emailController.text;
+                                //   String password = passwordController.text;
+                                //
+                                //   userviewmodel.modifyMailWithReauthentication(
+                                //     currentEmail, newMail, password, (bool success, String? message) {
+                                //     if (success) {
+                                //       // Email aggiornata con successo
+                                //       Fluttertoast.showToast(
+                                //         msg: 'Email aggiornata con successo',
+                                //         toastLength: Toast.LENGTH_SHORT,
+                                //       );
+                                //       Navigator.pop(context); // Torna indietro
+                                //     } else {
+                                //       // Mostra messaggio di errore
+                                //       Fluttertoast.showToast(
+                                //         msg: message ?? "",
+                                //         toastLength: Toast.LENGTH_SHORT,
+                                //       );
+                                //     }
+                                //   },
+                                //   );
+                                // } else {
+                                //   // L'utente non è stato trovato, gestisci di conseguenza
+                                //   Fluttertoast.showToast(
+                                //     msg: 'Utente non trovato',
+                                //     toastLength: Toast.LENGTH_SHORT,
+                                //   );
+                                // }
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF00BFFF),
