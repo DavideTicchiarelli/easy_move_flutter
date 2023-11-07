@@ -122,7 +122,7 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                   ],
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.365,
+                  height: MediaQuery.of(context).size.height * 0.32,
                   child: TabBarView(
                     children: [
                       // Contenuto del Tab 1
