@@ -160,7 +160,8 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                                   ),
                                 ),
                                 Text(
-                                  "Destinazione Non Implementata", // Sostituisci con il valore desiderato
+                                  "Destinazione", // Sostituisci con il valore desiderato
+
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 18.0,
@@ -254,6 +255,11 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                                   backgroundColor: Colors.grey,
                                   textColor: Colors.white,
                                 );
+
+                                if(message=="Richiesta memorizzata con successo"){
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF00BFFF),
