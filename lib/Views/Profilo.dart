@@ -93,6 +93,7 @@ class Profilo extends StatelessWidget {
                           children: [
                             ElevatedButton(
                               onPressed: () {
+                                // al click sul pulsante ModificaEmail viene aperta la schermata di ModificaEmail
                               Navigator.push(context, MaterialPageRoute(builder: (context) => ModificaEmail()));
                               },
                               style: ElevatedButton.styleFrom(
@@ -114,6 +115,7 @@ class Profilo extends StatelessWidget {
                             SizedBox(height: 3), // Spaziatura di 3px
                             ElevatedButton(
                               onPressed: () {
+                                //al click sul pulsante reset password viene aperta la schermata per il Reset
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => ResetPasswordScreen()));
                               },
                               style: ElevatedButton.styleFrom(
@@ -141,7 +143,7 @@ class Profilo extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            showLogoutDialog(context);
+                            showLogoutDialog(context); // al click sul pulsante logout viene visualizzato il dialog per confermare l'azione
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,
@@ -207,6 +209,7 @@ class Profilo extends StatelessWidget {
     );
   }
 
+  // Dialog per confermare l'azione di logout dell'utente
   void showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -259,8 +262,10 @@ class Profilo extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () async {
+                            // Al click sul pulsante logout viene chiamato il metodo logout dello UserViewModel
                             String message = await userViewModel.logout(); // Esegui il logout e attendi il risultato
 
+                            // toast per visualizzare il messaggio relativo all'operazione di Logout
                             Fluttertoast.showToast(
                               msg: message, // Il messaggio da mostrare nel toast
                               toastLength: Toast.LENGTH_SHORT, // Durata del toast (SHORT o LONG)
@@ -269,7 +274,9 @@ class Profilo extends StatelessWidget {
                               textColor: Colors.white, // Colore del testo del toast
                             );
 
+                            // controllo se l'esito del logout è avvenuto con successo
                             if(message=="Logout avvenuto con successo"){
+                              //navigazione alla prima schermata dell'app
                               Navigator.of(context).popUntil((route) => route.isFirst);
                             }
                           },

@@ -8,8 +8,11 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+
+  // Controller per la gestione dell'inpit dell'email
   final TextEditingController emailController = TextEditingController();
-  final userViewModel = UserViewModel();
+
+  final userViewModel = UserViewModel(); // Istanzia il ViewModel per la gestione dello User
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +104,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
                               onPressed: () {
+                                // chiamata della funzione sendPasswordResetEmail per mandare una mail per il reset della password
                                 userViewModel.sendPasswordResetEmail(
                                   emailController.text,
                                       () {

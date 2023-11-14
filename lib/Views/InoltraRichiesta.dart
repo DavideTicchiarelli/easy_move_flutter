@@ -18,8 +18,12 @@ class InoltraRichiesta extends StatefulWidget {
 }
 
 class _InoltraRichiestaState extends State<InoltraRichiesta> {
+
+  // Istanzia i view model per la gestione dello user e della richiesta
   final UserViewModel userViewModel = UserViewModel();
   final RichiestaViewModel richiestaViewModel = RichiestaViewModel();
+
+  // Controller per gestire l'input dei campi della richiesta
   final TextEditingController dataController = TextEditingController();
   final TextEditingController descrizioneController = TextEditingController();
   DateTime? selectedDate;
@@ -161,7 +165,6 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                                 ),
                                 Text(
                                   "Destinazione", // Sostituisci con il valore desiderato
-
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 18.0,
@@ -180,19 +183,21 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                               borderRadius: BorderRadius.circular(15.0),
                               color: const Color(0x1A00bfff),
                             ),
+                            // GestureDetector per gestire l'evento di tap sul campo textField della data
                             child: GestureDetector(
                               onTap: () async {
+                                // visualizzazione del DatePicker
                                 DateTime? pickedDate = await showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime(DateTime.now().year),
                                   lastDate: DateTime(DateTime.now().year + 5),
                                 );
-
+                                // controllo se è stata selezionata una data
                                 if (pickedDate != null) {
                                   setState(() {
-                                    selectedDate = pickedDate;
-                                    dataController.text = DateFormat('dd/MM/yyyy').format(selectedDate!);
+                                    selectedDate = pickedDate; // memorizzazione della data selezionata sul DatePicker
+                                    dataController.text = DateFormat('dd/MM/yyyy').format(selectedDate!); // formattazione della data ottenuta dal DatePicker
                                   });
                                 }
                               },
@@ -243,9 +248,10 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                             padding: const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
                               onPressed: () async {
+                                // quando viene premuto il pulstante di inoltro richiesta viene chiamta la funzione inoltraRichiesta del RichiestaViewModel fornendo i dati necessari
                                 var message = await richiestaViewModel.inoltraRichiesta(dataController.text, widget.veicolo.idGuidatore,
                                     descrizioneController.text, widget.veicolo.tariffakm, widget.veicolo.targa);
-
+                                //visualizzazione del Toast contenente il messaggio dell'esito dell'operazione di inolto della richiesta
                                 Fluttertoast.showToast(
                                   msg: message,
                                   toastLength:
@@ -256,6 +262,7 @@ class _InoltraRichiestaState extends State<InoltraRichiesta> {
                                   textColor: Colors.white,
                                 );
 
+                                //se la richiesta viene inoltrata, l'utente viene riportato sulla Home
                                 if(message=="Richiesta memorizzata con successo"){
                                   Navigator.of(context).pop();
                                   Navigator.of(context).pop();

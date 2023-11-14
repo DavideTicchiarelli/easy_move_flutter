@@ -17,7 +17,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    // Esegui la logica per controllare il ruolo dell'utente corrente
+    // Esegui la logica per controllare il ruolo dell'utente corrente settando la variabile mostraPulsante
     userViewModel.verifyRole("consumatore").then((bool result) {
       setState(() {
         mostraPulsante = result;
@@ -75,14 +75,14 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-          if (mostraPulsante)
+          if (mostraPulsante) //controlla se mostraPulsante è true, nel caso sia ture il Container viene mostrato altrimenti no
             Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             margin: const EdgeInsets.only(bottom: 5.0),
             child: ElevatedButton(
               onPressed: () {
-                // Azione quando il pulsante viene premuto
+                // alla pressione del pulsante viene aperta la schermata contenente i veicoli prenotabili
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const ListaVeicoli()),

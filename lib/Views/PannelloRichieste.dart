@@ -96,6 +96,7 @@ class _PannelloRichiesteState extends State<PannelloRichieste> {
                     ),
                   ),
                   const SizedBox(height: 10),
+                  // conteggio di tutte le richieste e in base allo stato
                   createTextWidget('Richieste totali:', listaRichieste.length.toString()),
                   createTextWidget('Richieste in attesa:', richiestaViewModel.getFilteredRichiesteCount(listaRichieste, "Attesa")),
                   createTextWidget('Richieste accettate:', richiestaViewModel.getFilteredRichiesteCount(listaRichieste, "Accettata")),
@@ -242,11 +243,14 @@ Widget buildRichiestaList(List<Richiesta> listaRichieste, RichiestaViewModel ric
               createText("Targa:", richiesta.targa),
               Row(
                 children: [
+                  // visualizzazione del pulsante per accettare solo per le richieste in attesa e per lo user con ruolo Guidatore
                   if (userType != "consumatore" && Tab != "Completata" && Tab != "Rifiutata" && Tab != "Accettata")
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () async {
+                          //aggiornamento dello stato della richiesta
                           var message = await richiestaViewModel.updateRichiestaStatus(richiesta.id, "Accettata");
+                          //visualizzazione toast contenente il messaggio relativo all'aggiornamneto dello stato della richiesta
                           Fluttertoast.showToast(
                             msg: message,
                             toastLength: Toast.LENGTH_SHORT,
@@ -254,6 +258,8 @@ Widget buildRichiestaList(List<Richiesta> listaRichieste, RichiestaViewModel ric
                             backgroundColor: Colors.grey,
                             textColor: Colors.white,
                           );
+
+                          // aggiornamento dei dati dell'interfaccia utente
                           loadRequest();
                         },
                         style: ElevatedButton.styleFrom(
@@ -272,11 +278,14 @@ Widget buildRichiestaList(List<Richiesta> listaRichieste, RichiestaViewModel ric
                         ),
                       ),
                     ),
+                  // visualizzazione del pulsante per il completamento solo per le richieste accettate e per lo user con ruolo Guidatore
                   if(userType != "consumatore" && Tab != "Completata" && Tab != "Rifiutata" && Tab != "Attesa")
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () async {
+                        //aggiornamento dello stato della richiesta
                         var message = await richiestaViewModel.updateRichiestaStatus(richiesta.id, "Completata");
+                        //visualizzazione toast contenente il messaggio relativo all'aggiornamneto dello stato della richiesta
                         Fluttertoast.showToast(
                           msg: message,
                           toastLength: Toast.LENGTH_SHORT,
@@ -284,6 +293,8 @@ Widget buildRichiestaList(List<Richiesta> listaRichieste, RichiestaViewModel ric
                           backgroundColor: Colors.grey,
                           textColor: Colors.white,
                         );
+
+                        // aggiornamento dei dati dell'interfaccia utente
                         loadRequest();
                       },
                       style: ElevatedButton.styleFrom(
@@ -303,11 +314,13 @@ Widget buildRichiestaList(List<Richiesta> listaRichieste, RichiestaViewModel ric
                     ),
                   ),
                   const SizedBox(width: 10),
-                  if (Tab != "Completata" && Tab != "Rifiutata")
+                  if (Tab != "Completata" && Tab != "Rifiutata") // visualizzazione del pulsante rifiuta solo per le richieste in attesa e accettate
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () async {
+                        //aggiornamento dello stato della richiesta
                         var message = await richiestaViewModel.updateRichiestaStatus(richiesta.id, "Rifiutata");
+                        //visualizzazione toast contenente il messaggio relativo all'aggiornamneto dello stato della richiesta
                         Fluttertoast.showToast(
                           msg: message,
                           toastLength: Toast.LENGTH_SHORT,
@@ -315,6 +328,7 @@ Widget buildRichiestaList(List<Richiesta> listaRichieste, RichiestaViewModel ric
                           backgroundColor: Colors.grey,
                           textColor: Colors.white,
                         );
+                        // aggiornamento dei dati dell'interfaccia utente
                         loadRequest();
                       },
                       style: ElevatedButton.styleFrom(

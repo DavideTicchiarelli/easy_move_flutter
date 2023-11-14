@@ -15,6 +15,7 @@ class AggiungiVeicolo extends StatefulWidget {
 }
 
 class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
+  // Controller per gestire l'input delle informazioni relative ad un veicolo
   TextEditingController modelloController = TextEditingController();
   TextEditingController targaController = TextEditingController();
   TextEditingController locazioneController = TextEditingController();
@@ -23,11 +24,12 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
   TextEditingController larghezzaController = TextEditingController();
   TextEditingController tariffaController = TextEditingController();
 
-  String? _imageUrl;
+  String? _imageUrl; // Variabile per memorizzare l'URL dell'immagine selezionata
 
 
-  final VeicoloViewModel veicoloViewModel = VeicoloViewModel();
+  final VeicoloViewModel veicoloViewModel = VeicoloViewModel(); // Istanzia il view model per la gestione del veicolo
 
+  // Metodo per selezionare un'immagine dalla galleria
   Future<void> pickImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -202,7 +204,7 @@ class _AggiungiVeicoloState extends State<AggiungiVeicolo> {
                                 String larghezza = larghezzaController.text;
                                 String tariffa = tariffaController.text;
 
-                                String userId = (await UserViewModel().getCurrentUser())?.id ?? "";
+                                String userId = (await UserViewModel().getCurrentUser())?.id ?? ""; // ottenimento id guidatore
 
                                 // Chiama il metodo registerVehicle dal VeicoloRepository
                                 String message =

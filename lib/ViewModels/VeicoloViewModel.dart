@@ -53,7 +53,7 @@ class VeicoloViewModel {
       }
       */
 
-      // Chiama il metodo registerVehicle dalla tua istanza di VeicoloRepository
+      // Chiama il metodo registerVehicle dall'istanza di VeicoloRepository passando i dati del veicolo
       String message = await veicoloRepository.registerVehicle(
         guidatoreId,
         modello,
@@ -71,6 +71,7 @@ class VeicoloViewModel {
 
   // Metodo per calcolare la capienza
   String calcoloCapienza(String lunghezza, String altezza, String larghezza) {
+    //parsing da string a double
     double lunghezzaDouble = double.parse(lunghezza);
     double altezzaDouble = double.parse(altezza);
     double larghezzaDouble = double.parse(larghezza);
@@ -79,6 +80,7 @@ class VeicoloViewModel {
         ((lunghezzaDouble * altezzaDouble * larghezzaDouble) / 1000000);
     String formattedCapienza = capienza.toStringAsFixed(2);
 
+    //return di una stringa indicante la capienza
     return '$formattedCapienza m³';
   }
 
@@ -92,6 +94,7 @@ class VeicoloViewModel {
   // Metodo per fare il fetch di tutti i veicoli
   Future<List<Veicolo>> getVansList() async {
     try {
+      //chiamata alla funzione getVansCollection in veicoloRepository per ottenre la lista dei veicoli
       return await veicoloRepository.getVansCollection();
     } catch (e) {
       // Gestisci eventuali eccezioni qui, se necessario

@@ -9,6 +9,7 @@ class RichiestaViewModel {
   final RichiestaRepository richiestaRepository = RichiestaRepository();
   final UserRepository userRepository = UserRepository();
 
+  // Metodo per inoltrare una richiesta
   Future<String> inoltraRichiesta(
       String data,
       String iddriver,
@@ -16,10 +17,14 @@ class RichiestaViewModel {
       String price,
       String targa,
       ) async {
-    var idconsumer = await userRepository.getUserId();
+    var idconsumer = await userRepository.getUserId(); // Ottiene l'ID del consumatore
+
+    // Controlla se tutti i campi necessari sono stati compilati
     if (idconsumer.isNotEmpty && iddriver.isNotEmpty && targa.isNotEmpty && price.isNotEmpty) {
       if (data.isNotEmpty && description.isNotEmpty) {
+        // Controlla se la data fornita è valida
         if (checkDate(data)) {
+          // Crea un oggetto Richiesta con i dati forniti
           final richiesta = Richiesta(
             idconsumer: idconsumer,
             data: data,
@@ -30,8 +35,10 @@ class RichiestaViewModel {
             targa: targa,
             id: "STANDARD ID",
           );
+
+          // Richiama il metodo storeRequest presente in richiestaRepository per la memorizzazione della richiesta in Firestore
           var message = richiestaRepository.storeRequest(richiesta);
-          return message;// Restituisci una stringa quando la logica è completata con successo
+          return message;// Restituisci una stringa contenente un messaggio quando la logica è completata con successo
         } else {
           return "Data non valida, scegli una data successiva al giorno corrente";
         }
@@ -49,10 +56,11 @@ class RichiestaViewModel {
     return true;
   }
 
+  // Metodo per ottenere le richieste correnti in base al tipo di utente
   Future<List<Richiesta>> getRichiesteCorrenti() async {
     try {
       final user = await userRepository.getCurrentUser();
-      final tutteLeRichieste = await richiestaRepository.getAllRichieste();
+      final tutteLeRichieste = await richiestaRepository.getAllRichieste(); // Ottiene tutte le richieste
       if(user?.userType == "consumatore"){
         // Filtra le richieste in base all'ID corrente (consumatore o guidatore)
         final richiesteCorrenti = tutteLeRichieste
@@ -74,14 +82,18 @@ class RichiestaViewModel {
     }
   }
 
+  // Filtra le richieste in base allo stato fornito e restituisce una lista filtrata
   List<Richiesta> filterRichiesteByStato(List<Richiesta> richieste, String status) {
     return richieste.where((richiesta) => richiesta.status == status).toList();
   }
 
+  // Ottiene il conteggio delle richieste filtrate in base allo stato fornito
   String getFilteredRichiesteCount(List<Richiesta> richieste, String status) {
     List<Richiesta> filteredRichieste = richieste.where((richiesta) => richiesta.status == status).toList();
     return filteredRichieste.length.toString();
   }
+
+  // Aggiorna lo stato di una richiesta chiamando il metodo updateRichiestaStatus prensente nella repository delle richieste
   Future<String> updateRichiestaStatus(String richiestaId, String newStatus){
     return richiestaRepository.updateRichiestaStatus(richiestaId, newStatus);
   }

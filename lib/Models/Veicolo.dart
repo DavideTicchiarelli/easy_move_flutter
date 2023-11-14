@@ -1,3 +1,4 @@
+// Definizione della classe Veicolo
 class Veicolo {
   final String idGuidatore;
   String modello;
@@ -7,6 +8,7 @@ class Veicolo {
   String tariffakm;
   final String imageUrl;
 
+  // Costruttore della classe Veicolo
   Veicolo({
     required this.idGuidatore,
     required this.modello,
@@ -17,7 +19,7 @@ class Veicolo {
     required this.imageUrl,
   });
 
-  // Costruttore senza nome
+  // Costruttore senza nome per creare un'istanza vuota di Veicolo
   Veicolo.empty()
       : idGuidatore = "",
         modello = "",
@@ -27,6 +29,7 @@ class Veicolo {
         tariffakm = "",
         imageUrl = "";
 
+  // Metodo per convertire gli attributi della classe in una mappa chiave-valore
   Map<String, dynamic> toMap() {
     return {
       'idGuidatore': idGuidatore,

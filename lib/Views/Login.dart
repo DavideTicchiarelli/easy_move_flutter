@@ -12,8 +12,9 @@ void main() {
 
 class Login extends StatelessWidget {
 
-  final UserViewModel userViewModel = UserViewModel();
+  final UserViewModel userViewModel = UserViewModel(); // Istanzia il ViewModel per la gestione dello User
 
+  // controller per la gestione dei campi di input del login
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -88,12 +89,15 @@ class Login extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
+                              //evento onPressed sul pulsante di login
                               onPressed: () async {
+                                //recupero dei dati inseriti dall'utente
                                 final email = emailController.text;
                                 final password = passwordController.text;
-
+                                // chiamata al metodo di login nello userViewModel e ottenimento del messaggio del risultato dell'esecuzione
                                 final result = await userViewModel.login(email, password);
 
+                                // visualizzazione toast contenente il messaggio relativo all'esecuzione del login
                                 Fluttertoast.showToast(
                                   msg: result ?? "",
                                   toastLength: Toast.LENGTH_SHORT,
@@ -102,10 +106,12 @@ class Login extends StatelessWidget {
                                   textColor: Colors.white,
                                 );
 
+                                // controllo se il login è andato a buon fine
                                 if(result=="Accesso avvenuto con successo"){
+                                  //navigazione verso la schermata Home
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => const BottomNavigationBarApp()), // Assicurati che LoginScreen sia il nome della tua schermata di accesso
+                                    MaterialPageRoute(builder: (context) => const BottomNavigationBarApp()),
                                   );
                                 }
                               },
@@ -137,10 +143,10 @@ class Login extends StatelessWidget {
                               const SizedBox(width: 2.0),
                               GestureDetector(
                                 onTap: () {
-                                  // Utilizza Navigator.push per navigare verso la schermata Login.dart
+                                  // Utilizza Navigator.push per navigare verso la schermata Singup.dart
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => const Signup()), // Assicurati che LoginScreen sia il nome della tua schermata di accesso
+                                    MaterialPageRoute(builder: (context) => const Signup()),
                                   );
                                 },
                                 child: const Text(
@@ -167,7 +173,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  // Funzione per la creazione dei campi da comppilare nel form
+  // Funzione per la creazione dei campi di input del form di login
   Widget createTextField({
     TextEditingController? controller,
     String labelText = "",

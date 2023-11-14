@@ -11,24 +11,24 @@ class ListaVeicoli extends StatefulWidget {
 }
 
 class _ListaVeicoliState extends State<ListaVeicoli> {
-  VeicoloViewModel veicoloViewModel = VeicoloViewModel();
-  List<Veicolo> vehicles = [];
-  bool isLoading = true;
+  VeicoloViewModel veicoloViewModel = VeicoloViewModel(); // Istanzia un oggetto ViewModel per i veicoli
+  List<Veicolo> vehicles = []; // Inizializza la lista di veicoli
+  bool isLoading = true; // Variabile per gestire lo stato di caricamento
 
   @override
   void initState() {
     super.initState();
-    loadVehicles();
+    loadVehicles(); // Metodo chiamato quando il widget viene inizializzato
   }
 
   Future<void> loadVehicles() async {
-    final veicoli = await veicoloViewModel.getVansList();
+    final veicoli = await veicoloViewModel.getVansList(); // Ottiene la lista dei veicoli dal Firestore
 
     setState(() {
-      vehicles = veicoli;
+      vehicles = veicoli; // Aggiorna la lista di veicoli con quelli ottenuti
       Future.delayed(const Duration(seconds: 1), () {
         setState(() {
-          isLoading = false; // Imposta isLoading su false dopo 3 secondi
+          isLoading = false; // Imposta isLoading su false dopo 1 secondo per simulare il caricamento
         });
       });
     });
@@ -101,7 +101,7 @@ class _ListaVeicoliState extends State<ListaVeicoli> {
                         children: [
                           const SizedBox(height: 10),
 
-                          // Use an Icon widget for the user account icon
+                          // caricamnto dell'immagine relativa al veicolo
                           if (veicolo.imageUrl.isNotEmpty)
                             Image.network(
                               veicolo.imageUrl,
@@ -135,6 +135,7 @@ class _ListaVeicoliState extends State<ListaVeicoli> {
                                       5), // Aggiungi il margine di 5dp qui
                                   child: ElevatedButton(
                                     onPressed: () {
+                                      //quando viene premuto l'ElevatedButton, l'utente viene portato sulla schermata di Inoltro della richiesta
                                       Navigator.push(context, MaterialPageRoute(builder: (context) => InoltraRichiesta(veicolo: veicolo)));
                                     },
                                     style: ElevatedButton.styleFrom(

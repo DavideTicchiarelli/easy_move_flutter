@@ -20,9 +20,12 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  //booleano per il controllo del check della checkbox per lo userType
   bool isChecked = false;
+  //Stringa che contiene il ruolo dell'utente che si sta registrando
   String userType = "consumatore";
 
+  //controller per la gestione degli input dei campi di registrazione
   TextEditingController nomeController = TextEditingController();
   TextEditingController cognomeController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -147,6 +150,7 @@ class _SignupState extends State<Signup> {
                                 const EdgeInsets.symmetric(horizontal: 15.0),
                             child: ElevatedButton(
                               onPressed: () async {
+                                //ottenimento informazioni inserite dall'utente nei campi di registrazione
                                 final name = nomeController.text;
                                 final surname = cognomeController.text;
                                 final email = emailController.text;
@@ -154,11 +158,13 @@ class _SignupState extends State<Signup> {
                                 final ripetiPassword =
                                     ripetiPasswordController.text;
 
+                                //settaggio dello userType in base allo stato della checkbox
                                 if (isChecked) {
                                   userType = "guidatore";
                                 } else {
                                   userType = "consumatore";
                                 }
+                                //chiamata al metodo signUp dello userViewModel per la gestione della registrazione
                                 final result = await userViewModel.signUp(
                                     name,
                                     surname,
@@ -167,6 +173,8 @@ class _SignupState extends State<Signup> {
                                     ripetiPassword,
                                     userType);
 
+
+                                //visualizzazione del toast contenente il messaggio relativo all'operazione di Signup
                                 Fluttertoast.showToast(
                                   msg: "$result", // Messaggio del toast
                                   toastLength: Toast.LENGTH_SHORT,
@@ -180,7 +188,9 @@ class _SignupState extends State<Signup> {
                                   fontSize: 15.0, // Dimensione del testo
                                 );
 
+                                // controllo se la registrazione è avvenuta con successo
                                 if (result == "Registrazione avvenuta") {
+                                  // navigazione verso la schermata Home
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

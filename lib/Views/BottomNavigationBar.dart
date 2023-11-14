@@ -15,7 +15,7 @@ class App extends StatelessWidget {
 }
 
 class BottomNavigationBarApp extends StatefulWidget {
-  const BottomNavigationBarApp({super.key});
+  const BottomNavigationBarApp({super.key}); // Aggiunge la keyword 'Key?' per identificare il widget
 
   @override
   _BottomNavigationBarAppState createState() => _BottomNavigationBarAppState();
@@ -38,12 +38,14 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
     const Profilo(),
   ];
 
+  // Seleziona le pagine in base al valore di showAggiungiIcon (in base al ruolo dell'utente)
   List<Widget> get _selectedPages => showAggiungiIcon ? _pages : _pagesWithoutAggiungi;
 
 
   @override
   void initState() {
     super.initState();
+    //verifica del ruolo dell'utente e assegnamento del valore alla variabile showAggiungiIcon
     userViewModel.verifyRole("guidatore").then((bool result) {
       setState(() {
         showAggiungiIcon = result;
@@ -85,7 +87,7 @@ class _BottomNavigationBarAppState extends State<BottomNavigationBarApp> {
           ],
           onTap: (index) {
             setState(() {
-              _currentIndex = index;
+              _currentIndex = index; // Cambia l'indice della pagina selezionata
             });
           },
         ),
